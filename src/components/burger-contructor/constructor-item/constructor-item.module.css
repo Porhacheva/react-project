@@ -1,0 +1,36 @@
+.item {
+	display: flex;
+	align-items: center;
+	margin-bottom: calc(var(--offset-base-size) * 4);
+}
+
+.constructor_inredient {
+	display: flex;
+	flex-grow: 1;
+	justify-content: space-between;
+	align-items: center;
+	margin-left: calc(var(--offset-base-size) * 2);
+	padding: 16px 32px 16px 24px;
+	background-color: var(--background);
+	border-radius: var(--common-border-radius-s);
+}
+
+.image {
+	width: 80px;
+	height: 40px;
+	margin-right: calc(var(--offset-base-size) * 5);
+}
+
+.price {
+	margin-right: calc(var(--offset-base-size) * 5);
+	margin-left: calc(var(--offset-base-size) * 5);
+}
+
+.name {
+	flex-grow: 1;
+	white-space: wrap;
+}
+
+.icon {
+	flex-shrink: 0;
+}

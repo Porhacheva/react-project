@@ -1,0 +1,26 @@
+.list {
+	padding-right: calc(var(--offset-base-size) * 2);
+	overflow-y: scroll;
+}
+
+.total_price {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: calc(var(--offset-base-size) * 10);
+	margin-bottom: calc(var(--offset-base-size) * 13);
+}
+
+.price {
+	margin-right: calc(var(--offset-base-size) * 10);
+}
+
+.top_bun {
+	margin-right: 23px;
+	border-radius: var(--top-constructor-item-border-radius) !important;
+}
+
+.bottom_bun {
+	margin-right: 23px;
+	border-radius: var(--bottom-constructor-item-border-radius) !important;
+}
