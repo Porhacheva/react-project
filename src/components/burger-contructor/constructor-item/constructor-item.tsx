@@ -11,20 +11,23 @@ import {
 type TConstructorItemProps = {
 	ingredient: TIngredient;
 	text?: string;
-	className?: string;
 };
 
 export const ConstructorItem = ({
 	ingredient,
 	text,
-	className,
 }: TConstructorItemProps): React.JSX.Element => {
 	return (
 		<>
 			<div className={styles.item} key={ingredient._id}>
-				<DragIcon type='primary' />
-				<div className={`${className} ${styles.constructor_inredient}`}>
-					<img src={ingredient.image} alt='' className={styles.image} />
+				{!text && <DragIcon type='primary' />}
+				<div
+					className={`${styles.constructor_inredient} ${text && styles.bun} ${text && text === 'низ' && styles.bottom_border}`}>
+					<img
+						src={ingredient.image}
+						alt={ingredient.name}
+						className={styles.image}
+					/>
 					<span className={`${styles.name} text_type_main-default`}>
 						{ingredient.name} {text && `(${text})`}
 					</span>

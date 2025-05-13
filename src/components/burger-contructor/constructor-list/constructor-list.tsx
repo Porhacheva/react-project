@@ -6,31 +6,26 @@ import { Price } from '@/components/price/price';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TBurgerIngredientsProps = {
+	bun: TIngredient;
 	ingredients: TIngredient[];
 };
 
 export const ConstructorList = ({
+	bun,
 	ingredients,
 }: TBurgerIngredientsProps): React.JSX.Element => {
 	return (
 		<>
-			<ConstructorItem
-				ingredient={ingredients[0]}
-				className={styles.top_bun}
-				text='верх'
-				key={ingredients[0]._id}
-			/>
+			<ConstructorItem ingredient={bun} text='верх' />
 			<div className={styles.list}>
-				{ingredients.map((ingredient, index) => {
+				{ingredients.map((ingredient) => {
 					if (ingredient.type !== 'bun')
-						return <ConstructorItem ingredient={ingredient} key={index} />;
+						return (
+							<ConstructorItem ingredient={ingredient} key={ingredient._id} />
+						);
 				})}
 			</div>
-			<ConstructorItem
-				ingredient={ingredients[ingredients.length - 1]}
-				className={styles.bottom_bun}
-				text='низ'
-			/>
+			<ConstructorItem ingredient={bun} text='низ' />
 			<div className={`${styles.total_price}`}>
 				<Price price={610} className={styles.price} size='large' />
 				<Button htmlType='button' type='primary' size='large'>

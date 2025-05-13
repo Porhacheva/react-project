@@ -14,13 +14,3 @@
 .price {
 	margin-right: calc(var(--offset-base-size) * 10);
 }
-
-.top_bun {
-	margin-right: 23px;
-	border-radius: var(--top-constructor-item-border-radius) !important;
-}
-
-.bottom_bun {
-	margin-right: 23px;
-	border-radius: var(--bottom-constructor-item-border-radius) !important;
-}
