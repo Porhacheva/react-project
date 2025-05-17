@@ -45,7 +45,7 @@ export const BurgerIngredients = ({
 						Начинки
 					</Tab>
 					<Tab value='sauce' active={false} onClick={() => {}}>
-						Соусы z{' '}
+						Соусы
 					</Tab>
 				</ul>
 			</nav>
