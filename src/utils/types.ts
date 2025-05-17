@@ -12,3 +12,10 @@ export type TIngredient = {
 	image_mobile: string;
 	__v: number;
 };
+
+export type TIconTypes =
+	| 'secondary'
+	| 'primary'
+	| 'error'
+	| 'success'
+	| 'disabled';

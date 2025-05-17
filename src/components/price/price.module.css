@@ -1,0 +1,9 @@
+.price {
+	display: flex;
+	align-items: center;
+}
+
+.number {
+	display: block;
+	margin-right: calc(var(--offset-base-size) * 2);
+}
