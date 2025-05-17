@@ -5,13 +5,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-.price {
-	display: flex;
-	align-items: center;
-	margin-top: var(--offset-base-size);
-	margin-bottom: var(--offset-base-size);
+	max-width: 265px;
 }
 
 .image {
@@ -21,7 +15,6 @@
 
 .name {
 	display: block;
-	max-width: 272px;
 	margin-bottom: 24px;
 	white-space: wrap;
 	text-align: center;

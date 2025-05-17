@@ -2,36 +2,31 @@ import React from 'react';
 import styles from './constructor-list.module.css';
 import { TIngredient } from '@/utils/types';
 import { ConstructorItem } from '../constructor-item/constructor-item';
-import { Price } from '@/components/price/price';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TBurgerIngredientsProps = {
-	bun: TIngredient;
 	ingredients: TIngredient[];
+	bun?: TIngredient;
 };
 
 export const ConstructorList = ({
-	bun,
 	ingredients,
+	bun,
 }: TBurgerIngredientsProps): React.JSX.Element => {
 	return (
 		<>
-			<ConstructorItem ingredient={bun} text='верх' />
+			{bun ? <ConstructorItem ingredient={bun} text='верх' /> : null}
 			<div className={styles.list}>
-				{ingredients.map((ingredient) => {
+				{ingredients.map((ingredient: TIngredient) => {
 					if (ingredient.type !== 'bun')
 						return (
-							<ConstructorItem ingredient={ingredient} key={ingredient._id} />
+							<ConstructorItem
+								ingredient={ingredient}
+								key={`${ingredient._id}`}
+							/>
 						);
 				})}
 			</div>
-			<ConstructorItem ingredient={bun} text='низ' />
-			<div className={`${styles.total_price}`}>
-				<Price price={610} className={styles.price} size='large' />
-				<Button htmlType='button' type='primary' size='large'>
-					Оформить заказ
-				</Button>
-			</div>
+			{bun ? <ConstructorItem ingredient={bun} text='низ' /> : null}
 		</>
 	);
 };

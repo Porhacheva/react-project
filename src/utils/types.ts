@@ -19,3 +19,8 @@ export type TIconTypes =
 	| 'error'
 	| 'success'
 	| 'disabled';
+
+export type TIngredientData = {
+	data: TIngredient[];
+	success: boolean;
+};
