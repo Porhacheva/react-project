@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './app.module.css';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients.tsx';
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor.tsx';
@@ -12,19 +12,19 @@ export const App = (): React.JSX.Element => {
 	const [state, setState] = useState({ isLoading: false, isError: false });
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
 
-	const getProductData = useCallback(async (): Promise<void> => {
-		setState({ ...state, isLoading: true });
-		try {
-			const ingredients: TIngredientData = await doRequest(url.ingredientsUrl);
-			setIngredients(ingredients.data);
-		} catch {
-			setState({ ...state, isError: true });
-		}
-		setState({ ...state, isLoading: false });
-	}, []);
-
 	useEffect(() => {
-		getProductData();
+		(async (): Promise<void> => {
+			setState({ ...state, isLoading: true });
+			try {
+				const ingredients: TIngredientData = await doRequest(
+					url.ingredientsUrl
+				);
+				setIngredients(ingredients.data);
+			} catch {
+				setState({ ...state, isError: true });
+			}
+			setState({ ...state, isLoading: false });
+		})();
 	}, []);
 
 	return (

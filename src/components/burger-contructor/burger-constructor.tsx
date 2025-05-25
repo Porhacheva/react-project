@@ -38,11 +38,6 @@ export const BurgerConstructor = ({
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
 	};
-	const modal = (
-		<Modal onCloseModal={handleCloseModal}>
-			<OrderDetails orderId={'034536'} />
-		</Modal>
-	);
 
 	return (
 		<section className={styles.burger_constructor}>
@@ -57,7 +52,11 @@ export const BurgerConstructor = ({
 					Оформить заказ
 				</Button>
 			</div>
-			{isModalOpen && modal}
+			{isModalOpen && (
+				<Modal onCloseModal={handleCloseModal}>
+					<OrderDetails orderId={'034536'} />
+				</Modal>
+			)}
 		</section>
 	);
 };

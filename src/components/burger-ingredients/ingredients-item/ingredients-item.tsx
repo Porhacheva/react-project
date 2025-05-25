@@ -21,11 +21,7 @@ export const IngredientsItem = ({
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
 	};
-	const modal = (
-		<Modal header='Детали ингредиента' onCloseModal={handleCloseModal}>
-			<IngredientDetails ingredient={ingredient} />
-		</Modal>
-	);
+
 	return (
 		<>
 			<div
@@ -41,7 +37,11 @@ export const IngredientsItem = ({
 				<Price price={ingredient.price} />
 				<span className={styles.name}>{ingredient.name}</span>
 			</div>
-			{isModalOpen && modal}
+			{isModalOpen && (
+				<Modal header='Детали ингредиента' onCloseModal={handleCloseModal}>
+					<IngredientDetails ingredient={ingredient} />
+				</Modal>
+			)}
 		</>
 	);
 };
