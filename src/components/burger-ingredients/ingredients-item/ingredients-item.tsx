@@ -1,32 +1,47 @@
-import React from 'react';
-import styles from './ingredients-item.module.css';
+import React, { useState } from 'react';
 import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Modal } from '@/components/modal/modal';
+import { IngredientDetails } from '@/components/modal/ingredient-details/ingredient-details';
+import styles from './ingredients-item.module.css';
 
 type TBurgerIngredientsProps = {
-	ingredients: TIngredient[];
+	ingredient: TIngredient;
 };
 
 export const IngredientsItem = ({
-	ingredients,
+	ingredient,
 }: TBurgerIngredientsProps): React.JSX.Element => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const handleOpenModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+	};
+
 	return (
 		<>
-			{ingredients.map((ingredient) => {
-				return (
-					<div className={styles.card} key={ingredient._id}>
-						<Counter count={1} />
-						<img
-							className={styles.image}
-							src={ingredient.image}
-							alt={ingredient.name}
-						/>
-						<Price price={ingredient.price} />
-						<span className={styles.name}>{ingredient.name}</span>
-					</div>
-				);
-			})}
+			<div
+				className={styles.card}
+				onClick={handleOpenModal}
+				role='presentation'>
+				<Counter count={1} />
+				<img
+					className={styles.image}
+					src={ingredient.image}
+					alt={ingredient.name}
+				/>
+				<Price price={ingredient.price} />
+				<span className={styles.name}>{ingredient.name}</span>
+			</div>
+			{isModalOpen && (
+				<Modal header='Детали ингредиента' onCloseModal={handleCloseModal}>
+					<IngredientDetails ingredient={ingredient} />
+				</Modal>
+			)}
 		</>
 	);
 };

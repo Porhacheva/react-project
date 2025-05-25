@@ -19,7 +19,7 @@ export const ConstructorItem = ({
 }: TConstructorItemProps): React.JSX.Element => {
 	return (
 		<>
-			<div className={styles.item} key={ingredient._id}>
+			<div className={styles.item}>
 				{!text && <DragIcon type='primary' />}
 				<div
 					className={`${styles.constructor_inredient} ${text && styles.bun} ${text && text === 'низ' && styles.bottom_border}`}>
