@@ -1,4 +1,5 @@
 .list {
+	max-height: 400px;
 	padding-right: calc(var(--offset-base-size) * 2);
 	overflow-y: scroll;
 }

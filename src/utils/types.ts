@@ -24,3 +24,5 @@ export type TIngredientData = {
 	data: TIngredient[];
 	success: boolean;
 };
+
+export type TAPIMethods = 'GET' | 'POST';

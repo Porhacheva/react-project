@@ -8,18 +8,20 @@ type TBurgerIngredientsProps = {
 	groupItems: TIngredient[];
 };
 
-export const IngredientsGroup = ({
-	groupName,
-	groupItems,
-}: TBurgerIngredientsProps): React.JSX.Element => {
-	return (
-		<>
-			<h2 className={styles.headline}>{groupName}</h2>
-			<div className={styles.group}>
-				{groupItems.map((item) => {
-					return <IngredientsItem ingredient={item} key={item._id} />;
-				})}
-			</div>
-		</>
-	);
-};
+export const IngredientsGroup = React.forwardRef(
+	(props: TBurgerIngredientsProps, ref) => {
+		const { groupName, groupItems } = props;
+		return (
+			<>
+				<h2 className={styles.headline} ref={ref}>
+					{groupName}
+				</h2>
+				<div className={styles.group}>
+					{groupItems.map((item) => {
+						return <IngredientsItem ingredient={item} key={item._id} />;
+					})}
+				</div>
+			</>
+		);
+	}
+);

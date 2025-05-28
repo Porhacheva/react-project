@@ -1,37 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients.tsx';
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor.tsx';
 import { AppHeader } from '@components/app-header/app-header.tsx';
-import { doRequest } from '@/utils/helper';
-import { url } from '@/utils/constants';
 import { Preloader } from '../preloader/preloader';
-import { TIngredient, TIngredientData } from '@/utils/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/app';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export const App = (): React.JSX.Element => {
-	const [state, setState] = useState({ isLoading: false, isError: false });
-	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
+	const dispatch: (...args: any[]) => any = useDispatch();
+	const { ingredients, ingredientsRequest, ingredientsRequestFailed } =
+		useSelector((state: any) => state.app);
 
 	useEffect(() => {
-		(async (): Promise<void> => {
-			setState({ ...state, isLoading: true });
-			try {
-				const ingredients: TIngredientData = await doRequest(
-					url.ingredientsUrl
-				);
-				setIngredients(ingredients.data);
-			} catch {
-				setState({ ...state, isError: true });
-			}
-			setState({ ...state, isLoading: false });
-		})();
-	}, []);
+		dispatch(getIngredients());
+	}, [dispatch]);
 
 	return (
 		<div className={styles.app}>
-			{state.isLoading ? <Preloader /> : null}
-			{!state.isLoading && state.isError ? 'Ошибка' : null}
-			{!state.isLoading && !state.isError && ingredients.length ? (
+			{ingredientsRequest ? <Preloader /> : null}
+			{!ingredientsRequest && ingredientsRequestFailed ? (
+				<div className={`${styles.error} text_type_main-large`}>Ошибка</div>
+			) : null}
+			{!ingredientsRequest &&
+			!ingredientsRequestFailed &&
+			ingredients.length ? (
 				<>
 					<AppHeader />
 					<h1
@@ -39,8 +34,10 @@ export const App = (): React.JSX.Element => {
 						Соберите бургер
 					</h1>
 					<main className={`${styles.main} pl-5 pr-5`}>
-						<BurgerIngredients ingredients={ingredients} />
-						<BurgerConstructor ingredients={ingredients} />
+						<DndProvider backend={HTML5Backend}>
+							<BurgerIngredients ingredients={ingredients} />
+							<BurgerConstructor />
+						</DndProvider>
 					</main>
 				</>
 			) : null}
