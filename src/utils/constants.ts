@@ -1,3 +1,5 @@
 export const url: any = {
-	ingredientsUrl: 'https://norma.nomoreparties.space/api/ingredients',
+	apiUrl: 'https://norma.nomoreparties.space/api',
+	ingredientsUrl: '/ingredients',
+	orderUrl: '/orders',
 };
