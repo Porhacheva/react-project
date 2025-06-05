@@ -15,6 +15,7 @@ import {
 	INCREASE_ITEM,
 } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const dispatch: (...args: any[]) => any = useDispatch();
@@ -54,7 +55,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				dispatch({ type: DECREASE_ITEM, item: bun });
 			}
 		} else {
-			dispatch({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, ...item });
+			dispatch({
+				type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+				ingredient: { ...item, key: nanoid() },
+			});
 		}
 		dispatch({ type: INCREASE_ITEM, ...item });
 	};

@@ -32,28 +32,11 @@ export const ConstructorItem = ({
 
 	const [, drop] = useDrop({
 		accept: 'item',
-		hover(item: any, monitor) {
-			if (!ref.current) {
+		hover(item: any) {
+			if (item.index === index || index == undefined || !moveCardHandler)
 				return;
-			}
-			const dragIndex = item.index;
-			const hoverIndex = index;
-			if (dragIndex === hoverIndex) {
-				return;
-			}
-			const hoverBoundingRect = ref.current?.getBoundingClientRect();
-			const hoverMiddleY =
-				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-			const clientOffset = monitor.getClientOffset();
-			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-				return;
-			}
-			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-				return;
-			}
-			moveCardHandler && moveCardHandler(dragIndex, hoverIndex);
-			item.index = hoverIndex;
+			moveCardHandler(item.index, index);
+			item.index = index;
 		},
 	});
 	drag(drop(ref));

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Ref, useEffect, useRef, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { TIngredient } from '@utils/types.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -30,10 +30,10 @@ export const BurgerIngredients = ({
 	const { constructorIngredients, bun } = useSelector(
 		(state: any) => state.app
 	);
-	const scrollRef = useRef(null);
-	const bunRef = useRef(null);
-	const mainRef = useRef(null);
-	const sauseRef = useRef(null);
+	const scrollRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
+	const bunRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
+	const mainRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
+	const sauseRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
 	const [bunTab, setBunTab] = useState(true);
 	const [mainTab, setMainTab] = useState(false);
 	const [sauseTab, setSauseTab] = useState(false);
@@ -46,14 +46,16 @@ export const BurgerIngredients = ({
 
 		const scrollSection = document.querySelector('.custom-scroll');
 		scrollSection?.addEventListener('scroll', () => {
-			const scrollY = scrollRef.current?.getBoundingClientRect().y;
-			const bunY = Math.abs(
+			const scrollY: number | undefined =
+				scrollRef.current?.getBoundingClientRect().y;
+			if (scrollY === undefined) return;
+			const bunY: number = Math.abs(
 				scrollY - bunRef.current?.getBoundingClientRect().y
 			);
-			const mainY = Math.abs(
+			const mainY: number = Math.abs(
 				scrollY - mainRef.current?.getBoundingClientRect().y
 			);
-			const sauseY = Math.abs(
+			const sauseY: number = Math.abs(
 				scrollY - sauseRef.current?.getBoundingClientRect().y
 			);
 			if (bunY < mainY && bunY < sauseY) {

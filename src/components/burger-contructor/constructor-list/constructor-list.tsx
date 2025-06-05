@@ -42,7 +42,7 @@ export const ConstructorList = ({
 						return (
 							<ConstructorItem
 								ingredient={ingredient}
-								key={`${ingredient._id} ${index}`}
+								key={ingredient.key}
 								index={index}
 								onDelete={() => deleteItem(ingredient, index)}
 								moveCardHandler={moveCardHandler}
