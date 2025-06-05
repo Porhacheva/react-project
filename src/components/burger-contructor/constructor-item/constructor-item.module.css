@@ -45,3 +45,7 @@
 .bottom_border {
 	border-radius: var(--bottom-constructor-item-border-radius) !important;
 }
+
+.drag {
+	cursor: grab;
+}

@@ -11,6 +11,7 @@ export type TIngredient = {
 	image_large: string;
 	image_mobile: string;
 	__v: number;
+	key?: string;
 };
 
 export type TIconTypes =
@@ -24,3 +25,5 @@ export type TIngredientData = {
 	data: TIngredient[];
 	success: boolean;
 };
+
+export type TAPIMethods = 'GET' | 'POST';
