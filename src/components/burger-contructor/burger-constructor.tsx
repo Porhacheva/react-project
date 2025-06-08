@@ -16,6 +16,7 @@ import {
 } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { nanoid } from '@reduxjs/toolkit';
+import { checkAuthToken } from '@/utils/helper';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const dispatch: (...args: any[]) => any = useDispatch();
@@ -23,6 +24,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		(state: any) => state.app
 	);
 	const { orderNumber, isModalOpen } = useSelector((state: any) => state.order);
+	const { isAuth } = useSelector((state: any) => state.registration);
 
 	const [, dropTarget] = useDrop({
 		accept: 'ingredient',
@@ -31,7 +33,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		},
 	});
 
-	const handleOpenModal = () => {
+	const handleOpenModal = (): void => {
+		if (!(checkAuthToken() && isAuth)) {
+			return;
+		}
 		if (!(constructorIngredients.length || bun)) {
 			return;
 		}

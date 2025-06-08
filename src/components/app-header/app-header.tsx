@@ -1,35 +1,79 @@
-import styles from './app-header.module.css';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	MAIN_TAB_IS_ACTIVE,
+	FEED_TAB_IS_ACTIVE,
+	LOGIN_TAB_IS_ACTIVE,
+} from '@/services/actions/registration';
 import {
 	BurgerIcon,
 	ListIcon,
 	ProfileIcon,
 	Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './app-header.module.css';
 
-export const AppHeader = () => {
+export const AppHeader = (): React.JSX.Element => {
+	const dispatch: (...args: any[]) => any = useDispatch();
+	const { mainTabIsActive, feedTabIsActive, loginTabIsActive, isAuth } =
+		useSelector((state: any) => state.registration);
+	const setActiveMainTab = (): void => {
+		dispatch({ type: MAIN_TAB_IS_ACTIVE });
+	};
+	const setActiveFeedTab = (): void => {
+		dispatch({ type: FEED_TAB_IS_ACTIVE });
+	};
+	const setActiveProfileTab = (): void => {
+		dispatch({ type: LOGIN_TAB_IS_ACTIVE });
+	};
+
+	useEffect((): void => {
+		const endpoint: string = window.location.href.split('/').slice(-1)[0];
+		if (
+			endpoint === 'profile' ||
+			endpoint === 'login' ||
+			endpoint === 'register' ||
+			endpoint === 'forgot-password'
+		) {
+			setActiveProfileTab();
+		} else if (endpoint === 'feed') {
+			setActiveFeedTab();
+		} else {
+			setActiveMainTab();
+		}
+		console.log(isAuth);
+	}, []);
+
 	return (
 		<header className={styles.header}>
 			<nav className={`${styles.menu} p-4`}>
 				<div className={styles.menu_part_left}>
-					{/*пока тут должны быть ссылки, а не например кнопки или абзацы*/}
-					<a href='/' className={`${styles.link} ${styles.link_active}`}>
-						<BurgerIcon type='primary' />
+					<Link
+						to={'/'}
+						className={`${styles.link} ${mainTabIsActive ? `${styles.link_active}` : ''}`}
+						onClick={setActiveMainTab}>
+						<BurgerIcon type={mainTabIsActive ? 'primary' : 'secondary'} />
 						<p className='text text_type_main-default ml-2'>Конструктор</p>
-					</a>
-					<a href='/feed' className={`${styles.link} ml-10`}>
-						<ListIcon type='secondary' />
+					</Link>
+					<Link
+						to={'/feed'}
+						className={`${styles.link} ml-10 ${feedTabIsActive ? `${styles.link_active}` : ''}`}
+						onClick={setActiveFeedTab}>
+						<ListIcon type={feedTabIsActive ? 'primary' : 'secondary'} />
 						<p className='text text_type_main-default ml-2'>Лента заказов</p>
-					</a>
+					</Link>
 				</div>
 				<div className={styles.logo}>
 					<Logo />
 				</div>
-				<a
-					href='/profile'
-					className={`${styles.link} ${styles.link_position_last}`}>
-					<ProfileIcon type='secondary' />
+				<Link
+					to={'/profile'}
+					className={`${styles.link} ${styles.link_position_last} ${loginTabIsActive ? `${styles.link_active}` : ''}`}
+					onClick={setActiveProfileTab}>
+					<ProfileIcon type={loginTabIsActive ? 'primary' : 'secondary'} />
 					<p className='text text_type_main-default ml-2'>Личный кабинет</p>
-				</a>
+				</Link>
 			</nav>
 		</header>
 	);
