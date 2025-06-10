@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Ref, useRef } from 'react';
 import styles from './constructor-item.module.css';
 import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
@@ -24,7 +24,7 @@ export const ConstructorItem = ({
 	onDelete,
 	moveCardHandler,
 }: TConstructorItemProps): React.JSX.Element => {
-	const ref = useRef(null);
+	const ref: Ref<HTMLElement> = useRef<HTMLElement>(null);
 	const [, drag] = useDrag({
 		type: 'item',
 		item: { index },

@@ -6,6 +6,7 @@
 	justify-content: center;
 	align-items: center;
 	max-width: 265px;
+	text-decoration: none;
 	cursor: grab;
 }
 
