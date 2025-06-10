@@ -20,8 +20,9 @@ export const App = (): React.JSX.Element => {
 		<BrowserRouter>
 			<AppHeader />
 			<Routes>
-				<Route path='/' element={<HomePage />} />
-				<Route path='/ingredients/:id' element={<IngredientModalPage />} />
+				<Route path='/' element={<HomePage />}>
+					<Route path='/ingredients/:id' element={<IngredientModalPage />} />
+				</Route>
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/feed' element={<FeedPage />} />
 				<Route

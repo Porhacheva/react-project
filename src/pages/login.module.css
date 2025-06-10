@@ -1,11 +1,14 @@
 .login-page {
+	margin: auto 0;
+}
+
+.form {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 24px;
 	height: calc(100vh - 88px);
-	margin: auto 0;
 }
 
 .button-block {

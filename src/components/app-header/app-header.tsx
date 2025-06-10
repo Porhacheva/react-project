@@ -16,8 +16,9 @@ import styles from './app-header.module.css';
 
 export const AppHeader = (): React.JSX.Element => {
 	const dispatch: (...args: any[]) => any = useDispatch();
-	const { mainTabIsActive, feedTabIsActive, loginTabIsActive, isAuth } =
-		useSelector((state: any) => state.registration);
+	const { mainTabIsActive, feedTabIsActive, loginTabIsActive } = useSelector(
+		(state: any) => state.registration
+	);
 	const setActiveMainTab = (): void => {
 		dispatch({ type: MAIN_TAB_IS_ACTIVE });
 	};
@@ -42,7 +43,6 @@ export const AppHeader = (): React.JSX.Element => {
 		} else {
 			setActiveMainTab();
 		}
-		console.log(isAuth);
 	}, []);
 
 	return (

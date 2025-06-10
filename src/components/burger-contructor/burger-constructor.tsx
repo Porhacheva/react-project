@@ -17,9 +17,12 @@ import {
 import { useDrop } from 'react-dnd';
 import { nanoid } from '@reduxjs/toolkit';
 import { checkAuthToken } from '@/utils/helper';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { LOGIN_TAB_IS_ACTIVE } from '@/services/actions/registration';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const dispatch: (...args: any[]) => any = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 	const { constructorIngredients, bun, price } = useSelector(
 		(state: any) => state.app
 	);
@@ -35,6 +38,8 @@ export const BurgerConstructor = (): React.JSX.Element => {
 
 	const handleOpenModal = (): void => {
 		if (!(checkAuthToken() && isAuth)) {
+			navigate('/login');
+			dispatch({ type: LOGIN_TAB_IS_ACTIVE });
 			return;
 		}
 		if (!(constructorIngredients.length || bun)) {
@@ -60,9 +65,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				dispatch({ type: DECREASE_ITEM, item: bun });
 			}
 		} else {
+			const key: string = nanoid();
 			dispatch({
 				type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-				ingredient: { ...item, key: nanoid() },
+				ingredient: { ...item, key: key },
 			});
 		}
 		dispatch({ type: INCREASE_ITEM, ...item });

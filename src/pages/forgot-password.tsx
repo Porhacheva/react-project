@@ -18,7 +18,8 @@ export const ForgotPasswordPage = (): React.JSX.Element => {
 	const dispatch: (...args: any[]) => any = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const revivePassword = async (): Promise<void> => {
+	const revivePassword = async (e: any): Promise<void> => {
+		e.preventDefault();
 		const data: TPostResetPasswordResponce = await dispatch(
 			postEmailToResetPassword(value)
 		);
@@ -36,29 +37,31 @@ export const ForgotPasswordPage = (): React.JSX.Element => {
 
 	return (
 		<div className={styles['login-page']}>
-			<span className='text_type_main-medium'>Восстановление пароля</span>
-			<Input
-				value={value}
-				type='email'
-				placeholder='Укажите e-mail'
-				onChange={(e) => setValue(e.target.value)}
-			/>
-			<Button htmlType={'button'} type='primary' onClick={revivePassword}>
-				Восстановить
-			</Button>
-			<div className='mt-15'>
-				<span className='text_type_main-default text_color_inactive pr-2'>
-					Вспомнили пароль?
-				</span>
-				<Link to={'/login'}>
-					<Button
-						htmlType={'button'}
-						type='secondary'
-						extraClass={styles['login-button']}>
-						Войти
-					</Button>
-				</Link>
-			</div>
+			<form onSubmit={revivePassword} className={styles.form}>
+				<span className='text_type_main-medium'>Восстановление пароля</span>
+				<Input
+					value={value}
+					type='email'
+					placeholder='Укажите e-mail'
+					onChange={(e) => setValue(e.target.value)}
+				/>
+				<Button htmlType={'submit'} type='primary'>
+					Восстановить
+				</Button>
+				<div className='mt-15'>
+					<span className='text_type_main-default text_color_inactive pr-2'>
+						Вспомнили пароль?
+					</span>
+					<Link to={'/login'}>
+						<Button
+							htmlType={'button'}
+							type='secondary'
+							extraClass={styles['login-button']}>
+							Войти
+						</Button>
+					</Link>
+				</div>
+			</form>
 		</div>
 	);
 };

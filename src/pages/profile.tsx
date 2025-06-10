@@ -80,7 +80,8 @@ export const ProfilePage = (): React.JSX.Element => {
 		setPassword(password);
 	};
 
-	const save = (): void => {
+	const save = (e: any): void => {
+		e.preventDefault();
 		const data: TUser = {
 			name: newName,
 			email: newEmail,
@@ -127,10 +128,10 @@ export const ProfilePage = (): React.JSX.Element => {
 			) : historyTabIsActive ? (
 				<Outlet />
 			) : (
-				<div className={styles['edit-block']}>
+				<form onSubmit={save} className={styles['edit-block']}>
 					<Input
 						value={newName}
-						type='email'
+						type='text'
 						placeholder='Имя'
 						icon='EditIcon'
 						onChange={(e) => setName(e.target.value)}
@@ -149,13 +150,13 @@ export const ProfilePage = (): React.JSX.Element => {
 						icon='EditIcon'
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<Button htmlType={'button'} type='primary' onClick={save}>
+					<Button htmlType={'submit'} type='primary'>
 						Сохранить
 					</Button>
 					<Button htmlType={'button'} type='secondary' onClick={reset}>
 						Отмена
 					</Button>
-				</div>
+				</form>
 			)}
 		</div>
 	);

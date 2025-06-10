@@ -35,36 +35,38 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 
 	return (
 		<div className={styles['login-page']}>
-			<span className='text_type_main-medium'>Восстановление пароля</span>
-			<Input
-				value={newPassword}
-				type='password'
-				placeholder='Введите новый пароль'
-				icon='ShowIcon'
-				onChange={(e) => setNewPassword(e.target.value)}
-			/>
-			<Input
-				value={code}
-				type='text'
-				placeholder='Введите код из письма'
-				onChange={(e) => setCode(e.target.value)}
-			/>
-			<Button htmlType={'button'} type='primary' onClick={savePassword}>
-				Сохранить
-			</Button>
-			<div className='mt-15'>
-				<span className='text_type_main-default text_color_inactive pr-2'>
-					Вспомнили пароль?
-				</span>
-				<Link to={'/login'}>
-					<Button
-						htmlType={'button'}
-						type='secondary'
-						extraClass={styles['login-button']}>
-						Войти
-					</Button>
-				</Link>
-			</div>
+			<form onSubmit={savePassword} className={styles.form}>
+				<span className='text_type_main-medium'>Восстановление пароля</span>
+				<Input
+					value={newPassword}
+					type='password'
+					placeholder='Введите новый пароль'
+					icon='ShowIcon'
+					onChange={(e) => setNewPassword(e.target.value)}
+				/>
+				<Input
+					value={code}
+					type='text'
+					placeholder='Введите код из письма'
+					onChange={(e) => setCode(e.target.value)}
+				/>
+				<Button htmlType={'submit'} type='primary'>
+					Сохранить
+				</Button>
+				<div className='mt-15'>
+					<span className='text_type_main-default text_color_inactive pr-2'>
+						Вспомнили пароль?
+					</span>
+					<Link to={'/login'}>
+						<Button
+							htmlType={'button'}
+							type='secondary'
+							extraClass={styles['login-button']}>
+							Войти
+						</Button>
+					</Link>
+				</div>
+			</form>
 		</div>
 	);
 };
