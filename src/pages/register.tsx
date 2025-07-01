@@ -1,53 +1,44 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+	Link,
+	Navigate,
+	NavigateFunction,
+	useNavigate,
+} from 'react-router-dom';
 import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
-import {
-	MAIN_TAB_IS_ACTIVE,
-	postRegistration,
-	SAVE_PASSWORD,
-} from '@/services/actions/registration';
-import { TPostLoginResponce } from '@/utils/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { postRegistration } from '@/services/actions/registration';
 import { checkAuthToken } from '@/utils/helper';
+import { TDispatch, TState } from '@/main';
 
 export const RegisterPage = (): React.JSX.Element => {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [error, setError] = useState<string | undefined>('');
-	const dispatch: (...args: any[]) => any = useDispatch();
-	const navigate = useNavigate();
+	const dispatch = useDispatch<TDispatch>();
+	const navigate: NavigateFunction = useNavigate();
+	const { isAuth, error } = useSelector((state: TState) => state.registration);
 
-	const register = async (e: any): Promise<void> => {
+	const register = async (
+		e: React.FormEvent<HTMLFormElement>
+	): Promise<void> => {
 		e.preventDefault();
-		if (error?.length) {
-			setError('');
-		}
-		try {
-			const data: TPostLoginResponce = await dispatch(
-				postRegistration({ email, password, name })
-			);
-			if (data.success) {
-				navigate('/');
-				dispatch({ type: SAVE_PASSWORD, password });
-				dispatch({ type: MAIN_TAB_IS_ACTIVE });
-			} else {
-				setError(data?.message);
-			}
-		} catch (error) {
-			setError('Произошла ошибка. Попробуйте снова');
-		}
+		dispatch(postRegistration({ email, password, name }));
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (checkAuthToken()) {
 			navigate('/profile');
 		}
 	}, []);
+
+	if (isAuth) {
+		return <Navigate to='/' replace />;
+	}
 
 	return (
 		<div className={styles['login-page']}>

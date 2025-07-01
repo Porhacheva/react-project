@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { OPEN_INGREDIENTS_MODAL } from '../../../services/actions/currentIngredient';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
+import { TDispatch } from '@/main';
 
 type TBurgerIngredientsProps = {
 	ingredient: TIngredient;
@@ -15,14 +16,14 @@ export const IngredientsItem = ({
 	ingredient,
 }: TBurgerIngredientsProps): React.JSX.Element => {
 	const { state } = useLocation();
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<TDispatch>();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
 		item: { ingredient },
 	});
 
-	const handleOpenModal = () => {
+	const handleOpenModal = (): void => {
 		dispatch({ type: OPEN_INGREDIENTS_MODAL, ingredient });
 	};
 

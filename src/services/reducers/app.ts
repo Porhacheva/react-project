@@ -22,8 +22,11 @@ const initialState = {
 	price: 0,
 };
 
-function increaseItem(array: TIngredient[], ingredient: TIngredient) {
-	return [...array].map((item: TIngredient) => {
+function increaseItem(
+	array: TIngredient[],
+	ingredient: TIngredient
+): TIngredient[] {
+	return [...array].map((item: TIngredient): TIngredient => {
 		return item._id === ingredient._id
 			? {
 					...item,
@@ -32,8 +35,11 @@ function increaseItem(array: TIngredient[], ingredient: TIngredient) {
 			: item;
 	});
 }
-function decreaseItem(array: TIngredient[], ingredient: TIngredient) {
-	return [...array].map((item: TIngredient) => {
+function decreaseItem(
+	array: TIngredient[],
+	ingredient: TIngredient
+): TIngredient[] {
+	return [...array].map((item: TIngredient): TIngredient => {
 		return item._id === ingredient._id
 			? {
 					...item,
@@ -89,7 +95,7 @@ export const appReducer = (state = initialState, action: any) => {
 			};
 		}
 		case INCREASE_ITEM: {
-			const isBun = action.ingredient.type === 'bun';
+			const isBun: boolean = action.ingredient.type === 'bun';
 			return {
 				...state,
 				ingredients: increaseItem(state.ingredients, action.ingredient),
@@ -103,7 +109,7 @@ export const appReducer = (state = initialState, action: any) => {
 			};
 		}
 		case DECREASE_ITEM: {
-			const isBun = action.item.type === 'bun';
+			const isBun: boolean = action.item.type === 'bun';
 			return {
 				...state,
 				ingredients: decreaseItem(state.ingredients, action.item),

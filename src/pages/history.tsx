@@ -1,3 +1,3 @@
-export function HistoryPage() {
+export const HistoryPage = (): React.JSX.Element => {
 	return <>HistoryPage</>;
-}
+};

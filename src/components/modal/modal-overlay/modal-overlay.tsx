@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import styles from './modal-overlay.module.css';
 
 type TModalOverlayProps = {
-	children: any;
+	children: ReactNode;
 	onClick: () => void;
 };
 

@@ -1,3 +1,4 @@
+import { TDispatch } from '@/main';
 import { url } from '@/utils/constants';
 import {
 	deleteCookie,
@@ -9,7 +10,7 @@ import {
 } from '@/utils/helper';
 import {
 	TPostRegistrationRequest,
-	TPostResetPasswordResponce,
+	TResponce,
 	TPostResetPasswordRequest,
 	TPostLoginResponce,
 	TPostLoginRequest,
@@ -38,10 +39,12 @@ export const LOGOUT_TAB_IS_ACTIVE = 'LOGOUT_TAB_IS_ACTIVE';
 export const REVIVE_PASSWORD_PAGE_IS_VISITED =
 	'REVIVE_PASSWORD_PAGE_IS_VISITED';
 
-export function getAuthUser() {
+export function getAuthUser(): (
+	dispatch: TDispatch
+) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: TDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -59,7 +62,6 @@ export function getAuthUser() {
 			}
 		} catch (error: any) {
 			if (error.message.includes('expired')) {
-				console.log(error);
 				throw Error(error);
 			} else {
 				dispatch({
@@ -69,10 +71,12 @@ export function getAuthUser() {
 		}
 	};
 }
-export function patchUser(data: TUser) {
+export function patchUser(
+	data: TUser
+): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: TDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -93,7 +97,7 @@ export function patchUser(data: TUser) {
 				password,
 			});
 			return response;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -101,10 +105,12 @@ export function patchUser(data: TUser) {
 	};
 }
 
-export function postRegistration(data: TPostRegistrationRequest) {
+export function postRegistration(
+	data: TPostRegistrationRequest
+): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: TDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -114,23 +120,31 @@ export function postRegistration(data: TPostRegistrationRequest) {
 				'POST',
 				data
 			);
+			const password: string = data.password;
 			dispatch({
 				type: GET_REGISTRATION_SUCCESS,
 				response,
 			});
 			setCookie('token', getToken(response.accessToken));
 			setCookie('refreshToken', response.refreshToken);
+			dispatch({ type: SAVE_PASSWORD, password });
+			dispatch({ type: MAIN_TAB_IS_ACTIVE });
 			return response;
-		} catch (error) {
+		} catch (error: unknown) {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
+				error,
 			});
 		}
 	};
 }
 
-export function postLogin(data: TPostLoginRequest) {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postLogin(
+	data: TPostLoginRequest
+): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
+	return async function (
+		dispatch: TDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -140,29 +154,32 @@ export function postLogin(data: TPostLoginRequest) {
 				'POST',
 				data
 			);
+			const password: string = data.password;
 			dispatch({
 				type: GET_REGISTRATION_SUCCESS,
 				response,
 			});
 			setCookie('token', getToken(response.accessToken));
 			setCookie('refreshToken', response.refreshToken);
+			dispatch({ type: SAVE_PASSWORD, password });
+			dispatch({ type: MAIN_TAB_IS_ACTIVE });
 			return response;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
 		}
 	};
 }
-export function postLogout() {
-	return async function (
-		dispatch: (...args: any[]) => Promise<TPostResetPasswordResponce>
-	) {
+export function postLogout(): (
+	dispatch: TDispatch
+) => Promise<TResponce | undefined> {
+	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const token = getCookie('refreshToken');
+			const token: string | undefined = getCookie('refreshToken');
 			await doRequest(url.apiUrl + url.auth + url.logoutUrl, 'POST', { token });
 			dispatch({
 				type: LOGOUT,
@@ -170,7 +187,7 @@ export function postLogout() {
 			deleteCookie('token');
 			deleteCookie('refreshToken');
 			return;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -178,13 +195,17 @@ export function postLogout() {
 	};
 }
 
-export function postRefreshToken() {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postRefreshToken(): (
+	dispatch: TDispatch
+) => Promise<TPostTokenResponce | undefined> {
+	return async function (
+		dispatch: TDispatch
+	): Promise<TPostTokenResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const token = getCookie('refreshToken');
+			const token: string | undefined = getCookie('refreshToken');
 			const response: TPostTokenResponce = await doRequest(
 				url.apiUrl + url.auth + url.tokenUrl,
 				'POST',
@@ -195,7 +216,6 @@ export function postRefreshToken() {
 			return response;
 		} catch (error: any) {
 			if (error.message.includes('Token is invalid')) {
-				console.log(error);
 				throw Error(error);
 			} else {
 				dispatch({
@@ -206,18 +226,20 @@ export function postRefreshToken() {
 	};
 }
 
-export function postEmailToResetPassword(email: string): any {
-	return async function (
-		dispatch: (...args: any[]) => Promise<TPostResetPasswordResponce>
-	) {
+export function postEmailToResetPassword(
+	email: string
+): (dispatch: TDispatch) => Promise<TResponce | undefined> {
+	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			return await doRequest(url.apiUrl + url.passwordForgotUrl, 'POST', {
+			await doRequest<TResponce>(url.apiUrl + url.passwordForgotUrl, 'POST', {
 				email: email,
 			});
-		} catch (error) {
+			dispatch({ type: REVIVE_PASSWORD_PAGE_IS_VISITED });
+			return;
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -225,19 +247,20 @@ export function postEmailToResetPassword(email: string): any {
 	};
 }
 
-export function postResetPassword(data: TPostResetPasswordRequest) {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postResetPassword(
+	data: TPostResetPasswordRequest
+): (dispatch: TDispatch) => Promise<TResponce | undefined> {
+	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const data1: TPostResetPasswordResponce = await doRequest(
+			return await doRequest(
 				url.apiUrl + url.passwordForgotUrl + url.passwordResetUrl,
 				'POST',
 				data
 			);
-			return data1;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});

@@ -1,4 +1,8 @@
-export const url: any = {
+interface IUrl {
+	[name: string]: string;
+}
+
+export const url: IUrl = {
 	apiUrl: 'https://norma.nomoreparties.space/api',
 	auth: '/auth',
 	ingredientsUrl: '/ingredients',
