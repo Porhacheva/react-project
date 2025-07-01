@@ -23,6 +23,7 @@ const registrationState = {
 	name: '',
 	password: '',
 	accessToken: '',
+	error: '',
 
 	//tabs
 	mainTabIsActive: false,
@@ -41,6 +42,7 @@ export const registrationReducer = (state = registrationState, action: any) => {
 			return {
 				...state,
 				registrationRequest: true,
+				error: '',
 			};
 		}
 		case GET_REGISTRATION_SUCCESS: {
@@ -49,6 +51,7 @@ export const registrationReducer = (state = registrationState, action: any) => {
 				isAuth: true,
 				email: action.response.user.email,
 				name: action.response.user.name,
+				error: '',
 			};
 		}
 		case GET_REGISTRATION_FAILED: {
@@ -56,6 +59,7 @@ export const registrationReducer = (state = registrationState, action: any) => {
 				...state,
 				registrationRequestFailed: true,
 				registrationRequest: false,
+				error: action.error,
 			};
 		}
 		case LOGIN: {

@@ -13,11 +13,12 @@ import {
 	Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
+import { TDispatch, TState } from '@/main';
 
 export const AppHeader = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
+	const dispatch = useDispatch<TDispatch>();
 	const { mainTabIsActive, feedTabIsActive, loginTabIsActive } = useSelector(
-		(state: any) => state.registration
+		(state: TState) => state.registration
 	);
 	const setActiveMainTab = (): void => {
 		dispatch({ type: MAIN_TAB_IS_ACTIVE });

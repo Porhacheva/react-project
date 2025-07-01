@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import {
 	Input,
 	Button,
@@ -8,15 +8,16 @@ import {
 import styles from './login.module.css';
 import { postResetPassword } from '@/services/actions/registration';
 import { TPostResetPasswordRequest } from '@/utils/types';
+import { TDispatch, TState } from '@/main';
 
 export const ResetPasswordPage = (): React.JSX.Element => {
 	const [newPassword, setNewPassword] = useState<string>('');
 	const [code, setCode] = useState<string>('');
-	const dispatch: (...args: any[]) => any = useDispatch();
+	const dispatch = useDispatch<TDispatch>();
 	const { revivePasswordPageIsVisited } = useSelector(
-		(state: any) => state.registration
+		(state: TState) => state.registration
 	);
-	const navigate = useNavigate();
+	const navigate: NavigateFunction = useNavigate();
 
 	const savePassword = async (): Promise<void> => {
 		const resetObject: TPostResetPasswordRequest = {
@@ -27,7 +28,7 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 		navigate('/login');
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (!revivePasswordPageIsVisited) {
 			navigate('/forgot-password');
 		}

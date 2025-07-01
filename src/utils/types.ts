@@ -50,11 +50,7 @@ export type TPostLoginRequest = {
 	password: string;
 };
 
-export type TPostTokenRequest = {
-	token: string;
-};
-
-export type TPostResetPasswordResponce = {
+export type TResponce = {
 	success: boolean;
 	message: string;
 };
@@ -71,4 +67,12 @@ export type TPostTokenResponce = {
 	success: boolean;
 	accessToken: string;
 	refreshToken: string;
+};
+
+export type TOrderResponce = {
+	success: boolean;
+	name: string;
+	order: {
+		number: number;
+	};
 };

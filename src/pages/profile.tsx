@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, Outlet, useNavigate } from 'react-router-dom';
 import {
 	PROFILE_TAB_IS_ACTIVE,
 	HISTORY_TAB_IS_ACTIVE,
@@ -19,10 +19,11 @@ import styles from './profile.module.css';
 import { TUser } from '@/utils/types';
 import { Preloader } from '@/components/preloader/preloader';
 import { deleteCookie } from '@/utils/helper';
+import { TDispatch, TState } from '@/main';
 
 export const ProfilePage = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
-	const navigate = useNavigate();
+	const dispatch = useDispatch<TDispatch>();
+	const navigate: NavigateFunction = useNavigate();
 	const {
 		registrationRequest,
 		profileTabIsActive,
@@ -31,7 +32,7 @@ export const ProfilePage = (): React.JSX.Element => {
 		name,
 		email,
 		password,
-	} = useSelector((state: any) => state.registration);
+	} = useSelector((state: TState) => state.registration);
 	useEffect((): void => {
 		init();
 	}, [name, email, password]);
@@ -80,7 +81,7 @@ export const ProfilePage = (): React.JSX.Element => {
 		setPassword(password);
 	};
 
-	const save = (e: any): void => {
+	const save = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		const data: TUser = {
 			name: newName,

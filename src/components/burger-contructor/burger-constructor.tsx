@@ -19,19 +19,26 @@ import { nanoid } from '@reduxjs/toolkit';
 import { checkAuthToken } from '@/utils/helper';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { LOGIN_TAB_IS_ACTIVE } from '@/services/actions/registration';
+import { TDispatch, TState } from '@/main';
+
+type TItem = {
+	ingredient: TIngredient;
+};
 
 export const BurgerConstructor = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
+	const dispatch = useDispatch<TDispatch>();
 	const navigate: NavigateFunction = useNavigate();
 	const { constructorIngredients, bun, price } = useSelector(
-		(state: any) => state.app
+		(state: TState) => state.app
 	);
-	const { orderNumber, isModalOpen } = useSelector((state: any) => state.order);
-	const { isAuth } = useSelector((state: any) => state.registration);
+	const { orderNumber, isModalOpen } = useSelector(
+		(state: TState) => state.order
+	);
+	const { isAuth } = useSelector((state: TState) => state.registration);
 
-	const [, dropTarget] = useDrop({
+	const [, dropTarget] = useDrop<TItem>({
 		accept: 'ingredient',
-		drop(item) {
+		drop(item: TItem): void {
 			handleDrop(item);
 		},
 	});
@@ -46,7 +53,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 			return;
 		}
 		const ingredientsIds: string[] = constructorIngredients.map(
-			(item: TIngredient) => {
+			(item: TIngredient): string => {
 				return item._id;
 			}
 		);
@@ -54,11 +61,11 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		dispatch(createOrder({ ingredients: ingredientsIds }));
 	};
 
-	const handleCloseModal = () => {
+	const handleCloseModal = (): void => {
 		dispatch({ type: CLOSE_ORDER_MODAL });
 	};
 
-	const handleDrop = (item: any) => {
+	const handleDrop = (item: TItem): void => {
 		if (item.ingredient.type === 'bun') {
 			dispatch({ type: ADD_BUN_TO_CONSTRUCTOR, ...item });
 			if (bun) {

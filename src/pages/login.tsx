@@ -1,52 +1,41 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import {
-	MAIN_TAB_IS_ACTIVE,
-	postLogin,
-	SAVE_PASSWORD,
-} from '@/services/actions/registration';
-import { TPostLoginResponce } from '@/utils/types';
-import { useDispatch } from 'react-redux';
+	Link,
+	Navigate,
+	NavigateFunction,
+	useNavigate,
+} from 'react-router-dom';
+import { postLogin } from '@/services/actions/registration';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { checkAuthToken } from '@/utils/helper';
+import { TDispatch, TState } from '@/main';
 
 export const LoginPage = (): React.JSX.Element => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [error, setError] = useState<string | undefined>('');
-	const dispatch: (...args: any[]) => any = useDispatch();
-	const navigate = useNavigate();
+	const dispatch = useDispatch<TDispatch>();
+	const navigate: NavigateFunction = useNavigate();
+	const { isAuth, error } = useSelector((state: TState) => state.registration);
 
-	const logIn = async (e: any): Promise<void> => {
+	const logIn = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
-		if (error?.length) {
-			setError('');
-		}
-		try {
-			const data: TPostLoginResponce = await dispatch(
-				postLogin({ email, password })
-			);
-			if (data.success) {
-				navigate('/');
-				dispatch({ type: SAVE_PASSWORD, password });
-				dispatch({ type: MAIN_TAB_IS_ACTIVE });
-			} else {
-				setError(data.message);
-			}
-		} catch (error) {
-			setError('Произошла ошибка. Попробуйте снова');
-		}
+		dispatch(postLogin({ email, password }));
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (checkAuthToken()) {
 			navigate('/profile');
 		}
 	}, []);
+
+	if (isAuth) {
+		return <Navigate to='/' replace />;
+	}
 
 	return (
 		<div className={styles['login-page']}>

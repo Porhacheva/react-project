@@ -8,13 +8,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getIngredients } from '../services/actions/app';
 import { Outlet } from 'react-router-dom';
+import { TDispatch, TState } from '@/main';
 
 export const HomePage = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
+	const dispatch = useDispatch<TDispatch>();
 	const { ingredients, ingredientsRequest, ingredientsRequestFailed } =
-		useSelector((state: any) => state.app);
+		useSelector((state: TState) => state.app);
 
-	useEffect(() => {
+	useEffect((): void => {
 		dispatch(getIngredients());
 	}, [dispatch]);
 
