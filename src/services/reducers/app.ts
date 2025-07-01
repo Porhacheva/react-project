@@ -71,7 +71,7 @@ export const appReducer = (state = initialState, action: any) => {
 				...state,
 				constructorIngredients: [
 					...state.constructorIngredients,
-					action.ingredient.ingredient,
+					{ ...action.ingredient.ingredient, key: action.ingredient.key },
 				],
 			};
 		}

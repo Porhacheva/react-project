@@ -1,15 +1,11 @@
 import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal } from '@/components/modal/modal';
-import { IngredientDetails } from '@/components/modal/ingredient-details/ingredient-details';
 import styles from './ingredients-item.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	CLOSE_INGREDIENTS_MODAL,
-	OPEN_INGREDIENTS_MODAL,
-} from '../../../services/actions/currentIngredient';
+import { useDispatch } from 'react-redux';
+import { OPEN_INGREDIENTS_MODAL } from '../../../services/actions/currentIngredient';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 type TBurgerIngredientsProps = {
 	ingredient: TIngredient;
@@ -18,10 +14,9 @@ type TBurgerIngredientsProps = {
 export const IngredientsItem = ({
 	ingredient,
 }: TBurgerIngredientsProps): React.JSX.Element => {
+	const { state } = useLocation();
 	const dispatch = useDispatch();
-	const { isModalOpen, currentIngredient } = useSelector(
-		(state: any) => state.ingredients
-	);
+
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
 		item: { ingredient },
@@ -31,15 +26,13 @@ export const IngredientsItem = ({
 		dispatch({ type: OPEN_INGREDIENTS_MODAL, ingredient });
 	};
 
-	const handleCloseModal = () => {
-		dispatch({ type: CLOSE_INGREDIENTS_MODAL });
-	};
-
 	return (
 		<>
-			<div
+			<Link
+				to={`ingredients/${ingredient._id}`}
+				state={state}
 				ref={dragRef}
-				className={styles.card}
+				className={`${styles.card} text_color_primary`}
 				onClick={handleOpenModal}
 				role='presentation'>
 				{ingredient.__v ? <Counter count={ingredient.__v} /> : null}
@@ -50,12 +43,7 @@ export const IngredientsItem = ({
 				/>
 				<Price price={ingredient.price} />
 				<span className={styles.name}>{ingredient.name}</span>
-			</div>
-			{isModalOpen && (
-				<Modal header='Детали ингредиента' onCloseModal={handleCloseModal}>
-					<IngredientDetails ingredient={currentIngredient} />
-				</Modal>
-			)}
+			</Link>
 		</>
 	);
 };

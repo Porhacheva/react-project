@@ -26,4 +26,49 @@ export type TIngredientData = {
 	success: boolean;
 };
 
-export type TAPIMethods = 'GET' | 'POST';
+export type TAPIMethods = 'GET' | 'POST' | 'PATCH';
+
+export type TUser = {
+	email: string;
+	name: string;
+	password?: string;
+};
+
+export type TPostResetPasswordRequest = {
+	password: string;
+	token: string;
+};
+
+export type TPostRegistrationRequest = {
+	email: string;
+	password: string;
+	name: string;
+};
+
+export type TPostLoginRequest = {
+	email: string;
+	password: string;
+};
+
+export type TPostTokenRequest = {
+	token: string;
+};
+
+export type TPostResetPasswordResponce = {
+	success: boolean;
+	message: string;
+};
+
+export type TPostLoginResponce = {
+	success: boolean;
+	accessToken?: string;
+	refreshToken?: string;
+	user: TUser;
+	message?: string;
+};
+
+export type TPostTokenResponce = {
+	success: boolean;
+	accessToken: string;
+	refreshToken: string;
+};
