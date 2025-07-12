@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppHeader } from '../app-header/app-header';
 import {
@@ -14,8 +14,15 @@ import {
 	ResetPasswordPage,
 } from '@/pages';
 import { ProtectedRouteElement } from '../protected-route/protected-route';
+import { getIngredients } from '@/services/actions/app';
+import { useDispatch } from '@/services/types/hooks';
 
 export const App = (): React.JSX.Element => {
+	const dispatch = useDispatch();
+	useEffect((): void => {
+		dispatch(getIngredients());
+	}, [dispatch]);
+
 	return (
 		<BrowserRouter>
 			<AppHeader />

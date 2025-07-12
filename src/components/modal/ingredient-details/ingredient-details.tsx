@@ -1,4 +1,4 @@
-import { TIngredient } from '@/utils/types';
+import { TIngredient } from '@/services/types';
 import styles from './ingredient-details.module.css';
 
 type TIngredientDetailsProps = {

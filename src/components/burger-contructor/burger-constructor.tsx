@@ -1,4 +1,3 @@
-import { TIngredient } from '@utils/types.ts';
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorList } from './constructor-list/constructor-list';
@@ -6,7 +5,6 @@ import { Price } from '@/components/price/price';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../modal/order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
 import { CLOSE_ORDER_MODAL, createOrder } from '../../services/actions/order';
 import {
 	ADD_BUN_TO_CONSTRUCTOR,
@@ -19,19 +17,25 @@ import { nanoid } from '@reduxjs/toolkit';
 import { checkAuthToken } from '@/utils/helper';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { LOGIN_TAB_IS_ACTIVE } from '@/services/actions/registration';
+import { TIngredient } from '@/services/types';
+import { useDispatch, useSelector } from '@/services/types/hooks';
+
+type TItem = {
+	ingredient: TIngredient;
+};
 
 export const BurgerConstructor = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 	const { constructorIngredients, bun, price } = useSelector(
-		(state: any) => state.app
+		(state) => state.app
 	);
-	const { orderNumber, isModalOpen } = useSelector((state: any) => state.order);
-	const { isAuth } = useSelector((state: any) => state.registration);
+	const { orderNumber, isModalOpen } = useSelector((state) => state.order);
+	const { isAuth } = useSelector((state) => state.registration);
 
-	const [, dropTarget] = useDrop({
+	const [, dropTarget] = useDrop<TItem>({
 		accept: 'ingredient',
-		drop(item) {
+		drop(item: TItem): void {
 			handleDrop(item);
 		},
 	});
@@ -46,7 +50,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 			return;
 		}
 		const ingredientsIds: string[] = constructorIngredients.map(
-			(item: TIngredient) => {
+			(item: TIngredient): string => {
 				return item._id;
 			}
 		);
@@ -54,11 +58,11 @@ export const BurgerConstructor = (): React.JSX.Element => {
 		dispatch(createOrder({ ingredients: ingredientsIds }));
 	};
 
-	const handleCloseModal = () => {
+	const handleCloseModal = (): void => {
 		dispatch({ type: CLOSE_ORDER_MODAL });
 	};
 
-	const handleDrop = (item: any) => {
+	const handleDrop = (item: TItem): void => {
 		if (item.ingredient.type === 'bun') {
 			dispatch({ type: ADD_BUN_TO_CONSTRUCTOR, ...item });
 			if (bun) {

@@ -14,8 +14,8 @@ const orderState = {
 	order: 0,
 };
 
-function getDigits(number: number) {
-	const orderNumber = number.toString();
+function getDigits(number: number): string {
+	const orderNumber: string = number.toString();
 	return orderNumber.padStart(7, '0');
 }
 

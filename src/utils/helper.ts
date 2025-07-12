@@ -1,33 +1,36 @@
-import { TAPIMethods } from './types';
+import { TAPIMethods } from '@/services/types';
 
-export async function doRequest(
+export async function doRequest<T>(
 	url: string,
 	method?: TAPIMethods,
 	data?: any
-): Promise<any> {
-	const res: any = await fetch(url, {
+): Promise<T> {
+	const res: Response = await fetch(url, {
 		method: method || 'GET',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data),
 	});
+	const _data = await res.json();
 	if (res.ok) {
-		return await res.json();
-	} else {
-		const responseText = await res.text();
-		const errorString = JSON.parse(responseText);
-		if (errorString['message'].includes('Token is invalid')) {
-			throw Error(JSON.stringify(errorString));
+		if (_data?.success) {
+			return _data as T;
+		} else {
+			const responseText = await res.text();
+			const errorString = JSON.parse(responseText);
+			if (errorString['message'].includes('Token is invalid')) {
+				throw Error(JSON.stringify(errorString));
+			}
 		}
 	}
-	return Promise.reject(`Ошибка ${res.status}`);
+	return Promise.reject(_data?.message);
 }
-export async function doAuthRequest(
+export async function doAuthRequest<T>(
 	url: string,
 	token: string,
 	method?: TAPIMethods,
 	data?: any
-): Promise<any> {
-	const res: any = await fetch(url, {
+): Promise<T> {
+	const res: Response = await fetch(url, {
 		method: method || 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -35,16 +38,19 @@ export async function doAuthRequest(
 		},
 		body: JSON.stringify(data),
 	});
+	const _data = await res.json();
 	if (res.ok) {
-		return await res.json();
-	} else {
-		const responseText = await res.text();
-		const errorString = JSON.parse(responseText);
-		if (errorString['message'].includes('expired')) {
-			throw Error(JSON.stringify(errorString));
+		if (_data?.success) {
+			return _data as T;
+		} else {
+			const responseText = await res.text();
+			const errorString = JSON.parse(responseText);
+			if (errorString['message'].includes('Token is invalid')) {
+				throw Error(JSON.stringify(errorString));
+			}
 		}
 	}
-	return Promise.reject(`Ошибка ${res}`);
+	return Promise.reject(_data?.message);
 }
 
 export function getCookie(name: string): string | undefined {
@@ -87,6 +93,6 @@ export function getToken(token: string | undefined): string | undefined {
 	return token?.split('Bearer ')[1];
 }
 
-export function checkAuthToken() {
+export function checkAuthToken(): string | undefined {
 	return getCookie('token');
 }

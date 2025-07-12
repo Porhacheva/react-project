@@ -7,41 +7,53 @@ import {
 	getToken,
 	setCookie,
 } from '@/utils/helper';
+import { AppDispatch } from '../types';
 import {
-	TPostRegistrationRequest,
-	TPostResetPasswordResponce,
-	TPostResetPasswordRequest,
 	TPostLoginResponce,
-	TPostLoginRequest,
-	TPostTokenResponce,
 	TUser,
-} from '@/utils/types';
+	TPostRegistrationRequest,
+	TPostLoginRequest,
+	TResponce,
+	TPostTokenResponce,
+	TPostResetPasswordRequest,
+} from '../types/api';
 
-export const GET_REGISTRATION_REQUEST = 'GET_REGISTRATION_REQUEST';
-export const GET_REGISTRATION_SUCCESS = 'GET_REGISTRATION_SUCCESS';
-export const GET_REGISTRATION_FAILED = 'GET_REGISTRATION_FAILED';
+export const GET_REGISTRATION_REQUEST: 'GET_REGISTRATION_REQUEST' =
+	'GET_REGISTRATION_REQUEST' as const;
+export const GET_REGISTRATION_SUCCESS: 'GET_REGISTRATION_SUCCESS' =
+	'GET_REGISTRATION_SUCCESS' as const;
+export const GET_REGISTRATION_FAILED: 'GET_REGISTRATION_FAILED' =
+	'GET_REGISTRATION_FAILED' as const;
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const SAVE_PASSWORD = 'SAVE_PASSWORD';
-export const AUTH = 'AUTH';
+export const LOGIN: 'LOGIN' = 'LOGIN' as const;
+export const LOGOUT: 'LOGOUT' = 'LOGOUT' as const;
+export const SAVE_PASSWORD: 'SAVE_PASSWORD' = 'SAVE_PASSWORD' as const;
+export const AUTH: 'AUTH' = 'AUTH' as const;
 
 //tabs
-export const MAIN_TAB_IS_ACTIVE = 'MAIN_TAB_IS_ACTIVE';
-export const FEED_TAB_IS_ACTIVE = 'FEED_TAB_IS_ACTIVE';
-export const LOGIN_TAB_IS_ACTIVE = 'LOGIN_TAB_IS_ACTIVE';
+export const MAIN_TAB_IS_ACTIVE: 'MAIN_TAB_IS_ACTIVE' =
+	'MAIN_TAB_IS_ACTIVE' as const;
+export const FEED_TAB_IS_ACTIVE: 'FEED_TAB_IS_ACTIVE' =
+	'FEED_TAB_IS_ACTIVE' as const;
+export const LOGIN_TAB_IS_ACTIVE: 'LOGIN_TAB_IS_ACTIVE' =
+	'LOGIN_TAB_IS_ACTIVE' as const;
 
-export const PROFILE_TAB_IS_ACTIVE = 'PROFILE_TAB_IS_ACTIVE';
-export const HISTORY_TAB_IS_ACTIVE = 'HISTORY_TAB_IS_ACTIVE';
-export const LOGOUT_TAB_IS_ACTIVE = 'LOGOUT_TAB_IS_ACTIVE';
+export const PROFILE_TAB_IS_ACTIVE: 'PROFILE_TAB_IS_ACTIVE' =
+	'PROFILE_TAB_IS_ACTIVE' as const;
+export const HISTORY_TAB_IS_ACTIVE: 'HISTORY_TAB_IS_ACTIVE' =
+	'HISTORY_TAB_IS_ACTIVE' as const;
+export const LOGOUT_TAB_IS_ACTIVE: 'LOGOUT_TAB_IS_ACTIVE' =
+	'LOGOUT_TAB_IS_ACTIVE' as const;
 
-export const REVIVE_PASSWORD_PAGE_IS_VISITED =
-	'REVIVE_PASSWORD_PAGE_IS_VISITED';
+export const REVIVE_PASSWORD_PAGE_IS_VISITED: 'REVIVE_PASSWORD_PAGE_IS_VISITED' =
+	'REVIVE_PASSWORD_PAGE_IS_VISITED' as const;
 
-export function getAuthUser() {
+export function getAuthUser(): (
+	dispatch: AppDispatch
+) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: AppDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -59,7 +71,6 @@ export function getAuthUser() {
 			}
 		} catch (error: any) {
 			if (error.message.includes('expired')) {
-				console.log(error);
 				throw Error(error);
 			} else {
 				dispatch({
@@ -69,10 +80,12 @@ export function getAuthUser() {
 		}
 	};
 }
-export function patchUser(data: TUser) {
+export function patchUser(
+	data: TUser
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: AppDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -93,7 +106,7 @@ export function patchUser(data: TUser) {
 				password,
 			});
 			return response;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -101,10 +114,12 @@ export function patchUser(data: TUser) {
 	};
 }
 
-export function postRegistration(data: TPostRegistrationRequest) {
+export function postRegistration(
+	data: TPostRegistrationRequest
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostLoginResponce>
-	) {
+		dispatch: AppDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -114,23 +129,31 @@ export function postRegistration(data: TPostRegistrationRequest) {
 				'POST',
 				data
 			);
+			const password: string = data.password;
 			dispatch({
 				type: GET_REGISTRATION_SUCCESS,
 				response,
 			});
 			setCookie('token', getToken(response.accessToken));
 			setCookie('refreshToken', response.refreshToken);
+			dispatch({ type: SAVE_PASSWORD, password });
+			dispatch({ type: MAIN_TAB_IS_ACTIVE });
 			return response;
-		} catch (error) {
+		} catch (error: unknown) {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
+				error,
 			});
 		}
 	};
 }
 
-export function postLogin(data: TPostLoginRequest) {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postLogin(
+	data: TPostLoginRequest
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -140,29 +163,34 @@ export function postLogin(data: TPostLoginRequest) {
 				'POST',
 				data
 			);
+			const password: string = data.password;
 			dispatch({
 				type: GET_REGISTRATION_SUCCESS,
 				response,
 			});
 			setCookie('token', getToken(response.accessToken));
 			setCookie('refreshToken', response.refreshToken);
+			dispatch({ type: SAVE_PASSWORD, password });
+			dispatch({ type: MAIN_TAB_IS_ACTIVE });
 			return response;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
 		}
 	};
 }
-export function postLogout() {
+export function postLogout(): (
+	dispatch: AppDispatch
+) => Promise<TResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostResetPasswordResponce>
-	) {
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const token = getCookie('refreshToken');
+			const token: string | undefined = getCookie('refreshToken');
 			await doRequest(url.apiUrl + url.auth + url.logoutUrl, 'POST', { token });
 			dispatch({
 				type: LOGOUT,
@@ -170,7 +198,7 @@ export function postLogout() {
 			deleteCookie('token');
 			deleteCookie('refreshToken');
 			return;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -178,13 +206,17 @@ export function postLogout() {
 	};
 }
 
-export function postRefreshToken() {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postRefreshToken(): (
+	dispatch: AppDispatch
+) => Promise<TPostTokenResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TPostTokenResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const token = getCookie('refreshToken');
+			const token: string | undefined = getCookie('refreshToken');
 			const response: TPostTokenResponce = await doRequest(
 				url.apiUrl + url.auth + url.tokenUrl,
 				'POST',
@@ -195,7 +227,6 @@ export function postRefreshToken() {
 			return response;
 		} catch (error: any) {
 			if (error.message.includes('Token is invalid')) {
-				console.log(error);
 				throw Error(error);
 			} else {
 				dispatch({
@@ -206,18 +237,22 @@ export function postRefreshToken() {
 	};
 }
 
-export function postEmailToResetPassword(email: string): any {
+export function postEmailToResetPassword(
+	email: string
+): (dispatch: AppDispatch) => Promise<TResponce | undefined> {
 	return async function (
-		dispatch: (...args: any[]) => Promise<TPostResetPasswordResponce>
-	) {
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			return await doRequest(url.apiUrl + url.passwordForgotUrl, 'POST', {
+			await doRequest<TResponce>(url.apiUrl + url.passwordForgotUrl, 'POST', {
 				email: email,
 			});
-		} catch (error) {
+			dispatch({ type: REVIVE_PASSWORD_PAGE_IS_VISITED });
+			return;
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});
@@ -225,19 +260,22 @@ export function postEmailToResetPassword(email: string): any {
 	};
 }
 
-export function postResetPassword(data: TPostResetPasswordRequest) {
-	return async function (dispatch: (...args: any[]) => any) {
+export function postResetPassword(
+	data: TPostResetPasswordRequest
+): (dispatch: AppDispatch) => Promise<TResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
 		try {
-			const data1: TPostResetPasswordResponce = await doRequest(
+			return await doRequest(
 				url.apiUrl + url.passwordForgotUrl + url.passwordResetUrl,
 				'POST',
 				data
 			);
-			return data1;
-		} catch (error) {
+		} catch {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 			});

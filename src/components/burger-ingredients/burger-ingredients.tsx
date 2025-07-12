@@ -1,17 +1,17 @@
 import React, { Ref, useEffect, useRef, useState } from 'react';
 import styles from './burger-ingredients.module.css';
-import { TIngredient } from '@utils/types.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services/types/hooks';
+import { TIngredient } from '@/services/types';
 
-type TBurgerIngredientsProps = {
-	ingredients: TIngredient[];
-};
+interface IGroupObject {
+	[name: string]: TIngredient[];
+}
 
-function getGroups(ingredients: TIngredient[]) {
-	const obj: any = {};
-	ingredients.forEach((ingredient: TIngredient) => {
+function getGroups(ingredients: TIngredient[]): IGroupObject {
+	const obj: IGroupObject = {};
+	ingredients.forEach((ingredient: TIngredient): void => {
 		if (!obj[ingredient.type]) {
 			obj[ingredient.type] = [ingredient];
 		} else {
@@ -21,42 +21,40 @@ function getGroups(ingredients: TIngredient[]) {
 	return obj;
 }
 
-export const BurgerIngredients = ({
-	ingredients,
-}: TBurgerIngredientsProps): React.JSX.Element => {
+export const BurgerIngredients = (): React.JSX.Element => {
 	const [buns, setBuns] = useState<TIngredient[]>([]);
 	const [mains, setMains] = useState<TIngredient[]>([]);
 	const [sauces, setSauses] = useState<TIngredient[]>([]);
-	const { constructorIngredients, bun } = useSelector(
-		(state: any) => state.app
+	const { constructorIngredients, bun, ingredients } = useSelector(
+		(state) => state.app
 	);
 	const scrollRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
-	const bunRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
-	const mainRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
-	const sauseRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
-	const [bunTab, setBunTab] = useState(true);
-	const [mainTab, setMainTab] = useState(false);
-	const [sauseTab, setSauseTab] = useState(false);
+	const bunRef: Ref<HTMLHeadingElement> = useRef<HTMLHeadingElement>(null);
+	const mainRef: Ref<HTMLHeadingElement> = useRef<HTMLHeadingElement>(null);
+	const sauseRef: Ref<HTMLHeadingElement> = useRef<HTMLHeadingElement>(null);
+	const [bunTab, setBunTab] = useState<boolean>(true);
+	const [mainTab, setMainTab] = useState<boolean>(false);
+	const [sauseTab, setSauseTab] = useState<boolean>(false);
 
-	useEffect(() => {
-		const groups: any = getGroups(ingredients);
+	useEffect((): void => {
+		const groups: IGroupObject = getGroups(ingredients);
 		setBuns(groups.bun);
 		setMains(groups.main);
 		setSauses(groups.sauce);
 
 		const scrollSection = document.querySelector('.custom-scroll');
-		scrollSection?.addEventListener('scroll', () => {
+		scrollSection?.addEventListener('scroll', (): void => {
 			const scrollY: number | undefined =
 				scrollRef.current?.getBoundingClientRect().y;
 			if (scrollY === undefined) return;
 			const bunY: number = Math.abs(
-				scrollY - bunRef.current?.getBoundingClientRect().y
+				scrollY - (bunRef.current?.getBoundingClientRect()?.y || 0)
 			);
 			const mainY: number = Math.abs(
-				scrollY - mainRef.current?.getBoundingClientRect().y
+				scrollY - (mainRef.current?.getBoundingClientRect()?.y || 0)
 			);
 			const sauseY: number = Math.abs(
-				scrollY - sauseRef.current?.getBoundingClientRect().y
+				scrollY - (sauseRef.current?.getBoundingClientRect()?.y || 0)
 			);
 			if (bunY < mainY && bunY < sauseY) {
 				setBunTab(true);
@@ -72,19 +70,19 @@ export const BurgerIngredients = ({
 				setSauseTab(true);
 			}
 		});
-	}, [constructorIngredients, bun]);
+	}, [constructorIngredients, bun, ingredients]);
 
 	return (
 		<section className={styles.burger_ingredients}>
 			<nav>
 				<ul className={styles.menu}>
-					<Tab value='bun' active={bunTab} onClick={() => {}}>
+					<Tab value='bun' active={bunTab} onClick={(): void => {}}>
 						Булки
 					</Tab>
-					<Tab value='main' active={mainTab} onClick={() => {}}>
+					<Tab value='main' active={mainTab} onClick={(): void => {}}>
 						Начинки
 					</Tab>
-					<Tab value='sauce' active={sauseTab} onClick={() => {}}>
+					<Tab value='sauce' active={sauseTab} onClick={(): void => {}}>
 						Соусы
 					</Tab>
 				</ul>

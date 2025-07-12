@@ -1,11 +1,11 @@
-import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredients-item.module.css';
-import { useDispatch } from 'react-redux';
 import { OPEN_INGREDIENTS_MODAL } from '../../../services/actions/currentIngredient';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from '@/services/types/hooks';
+import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
 	ingredient: TIngredient;
@@ -22,7 +22,7 @@ export const IngredientsItem = ({
 		item: { ingredient },
 	});
 
-	const handleOpenModal = () => {
+	const handleOpenModal = (): void => {
 		dispatch({ type: OPEN_INGREDIENTS_MODAL, ingredient });
 	};
 

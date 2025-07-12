@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, Outlet, useNavigate } from 'react-router-dom';
 import {
 	PROFILE_TAB_IS_ACTIVE,
 	HISTORY_TAB_IS_ACTIVE,
@@ -9,20 +9,20 @@ import {
 	postRefreshToken,
 	LOGOUT,
 } from '@/services/actions/registration';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
 	Button,
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { TUser } from '@/utils/types';
 import { Preloader } from '@/components/preloader/preloader';
 import { deleteCookie } from '@/utils/helper';
+import { useDispatch, useSelector } from '@/services/types/hooks';
+import { TUser } from '@/services/types/api';
 
 export const ProfilePage = (): React.JSX.Element => {
-	const dispatch: (...args: any[]) => any = useDispatch();
-	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 	const {
 		registrationRequest,
 		profileTabIsActive,
@@ -31,7 +31,7 @@ export const ProfilePage = (): React.JSX.Element => {
 		name,
 		email,
 		password,
-	} = useSelector((state: any) => state.registration);
+	} = useSelector((state) => state.registration);
 	useEffect((): void => {
 		init();
 	}, [name, email, password]);
@@ -80,7 +80,7 @@ export const ProfilePage = (): React.JSX.Element => {
 		setPassword(password);
 	};
 
-	const save = (e: any): void => {
+	const save = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		const data: TUser = {
 			name: newName,

@@ -1,6 +1,5 @@
 import React, { Ref, useRef } from 'react';
 import styles from './constructor-item.module.css';
-import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import {
 	DragIcon,
@@ -8,6 +7,7 @@ import {
 	LockIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
+import { TIngredient } from '@/services/types';
 
 type TConstructorItemProps = {
 	ingredient: TIngredient;
@@ -17,6 +17,12 @@ type TConstructorItemProps = {
 	moveCardHandler?: (dragIndex: number, hoverIndex: number) => void;
 };
 
+interface DraggedItem {
+	id: string;
+	type: 'item';
+	index: number;
+}
+
 export const ConstructorItem = ({
 	ingredient,
 	index,
@@ -24,15 +30,15 @@ export const ConstructorItem = ({
 	onDelete,
 	moveCardHandler,
 }: TConstructorItemProps): React.JSX.Element => {
-	const ref: Ref<HTMLElement> = useRef<HTMLElement>(null);
-	const [, drag] = useDrag({
+	const ref: Ref<HTMLDivElement> = useRef<HTMLDivElement>(null);
+	const [, drag] = useDrag<{ index: number | undefined }>({
 		type: 'item',
 		item: { index },
 	});
 
-	const [, drop] = useDrop({
+	const [, drop] = useDrop<DraggedItem>({
 		accept: 'item',
-		hover(item: any) {
+		hover(item: DraggedItem): void {
 			if (item.index === index || index == undefined || !moveCardHandler)
 				return;
 			moveCardHandler(item.index, index);

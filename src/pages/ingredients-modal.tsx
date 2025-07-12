@@ -1,29 +1,20 @@
 import { IngredientDetails } from '@/components/modal/ingredient-details/ingredient-details';
 import { Modal } from '@/components/modal/modal';
-import { getIngredients } from '@/services/actions/app';
 import { CLOSE_INGREDIENTS_MODAL } from '@/services/actions/currentIngredient';
-import { TIngredient } from '@/utils/types';
+import { TIngredient } from '@/services/types';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 
-export const IngredientModalPage = () => {
-	const { currentIngredient } = useSelector((state: any) => state.ingredients);
-	const { ingredients } = useSelector((state: any) => state.app);
-	const dispatch: (...args: any[]) => any = useDispatch();
+export const IngredientModalPage = (): React.JSX.Element => {
+	const { currentIngredient } = useSelector((state) => state.ingredients);
+	const { ingredients } = useSelector((state) => state.app);
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 	const [ingredient, setIngredient] = useState<TIngredient>(currentIngredient);
-	const { id } = useParams();
+	const { id } = useParams<string>();
 
-	useEffect(() => {
-		(async () => {
-			if (!currentIngredient) {
-				await dispatch(getIngredients());
-			}
-		})();
-	}, []);
-
-	useEffect(() => {
+	useEffect((): void => {
 		if (!currentIngredient) {
 			const item: TIngredient = ingredients.find(
 				(obj: TIngredient) => obj._id === id
@@ -31,9 +22,9 @@ export const IngredientModalPage = () => {
 			setIngredient(item);
 		}
 	}, [ingredients]);
-	const handleCloseModal = () => {
+	const handleCloseModal = (): void => {
 		dispatch({ type: CLOSE_INGREDIENTS_MODAL });
-		navigate(-1);
+		navigate('/');
 	};
 	return (
 		<>

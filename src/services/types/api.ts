@@ -1,32 +1,9 @@
-export type TIngredient = {
-	_id: string;
-	name: string;
-	type: string;
-	proteins: number;
-	fat: number;
-	carbohydrates: number;
-	calories: number;
-	price: number;
-	image: string;
-	image_large: string;
-	image_mobile: string;
-	__v: number;
-	key?: string;
-};
-
-export type TIconTypes =
-	| 'secondary'
-	| 'primary'
-	| 'error'
-	| 'success'
-	| 'disabled';
+import { TIngredient } from '.';
 
 export type TIngredientData = {
 	data: TIngredient[];
 	success: boolean;
 };
-
-export type TAPIMethods = 'GET' | 'POST' | 'PATCH';
 
 export type TUser = {
 	email: string;
@@ -50,11 +27,7 @@ export type TPostLoginRequest = {
 	password: string;
 };
 
-export type TPostTokenRequest = {
-	token: string;
-};
-
-export type TPostResetPasswordResponce = {
+export type TResponce = {
 	success: boolean;
 	message: string;
 };
@@ -71,4 +44,12 @@ export type TPostTokenResponce = {
 	success: boolean;
 	accessToken: string;
 	refreshToken: string;
+};
+
+export type TOrderResponce = {
+	success: boolean;
+	name: string;
+	order: {
+		number: number;
+	};
 };

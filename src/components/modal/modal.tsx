@@ -2,10 +2,10 @@ import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from './modal-overlay/modal-overlay';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 type TModalProps = {
-	children: any;
+	children: ReactNode;
 	onCloseModal: () => void;
 	header?: string;
 };
@@ -15,10 +15,9 @@ export const Modal = ({
 	onCloseModal,
 	header,
 }: TModalProps): React.JSX.Element => {
-	const modalRoot: HTMLElement | null = document.getElementById('modal-root');
-
+	const modalRoot: HTMLElement = document.getElementById('modal-root')!;
 	useEffect(() => {
-		const closeOnEscapePressed = (e: KeyboardEvent) => {
+		const closeOnEscapePressed = (e: KeyboardEvent): void => {
 			if (e.key === 'Escape') {
 				onCloseModal();
 			}
