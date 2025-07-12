@@ -1,6 +1,5 @@
 import React, { Ref, useRef } from 'react';
 import styles from './constructor-item.module.css';
-import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import {
 	DragIcon,
@@ -8,6 +7,7 @@ import {
 	LockIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
+import { TIngredient } from '@/services/types';
 
 type TConstructorItemProps = {
 	ingredient: TIngredient;

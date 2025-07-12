@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import {
 	MAIN_TAB_IS_ACTIVE,
 	FEED_TAB_IS_ACTIVE,
@@ -13,12 +12,12 @@ import {
 	Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 
 export const AppHeader = (): React.JSX.Element => {
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const { mainTabIsActive, feedTabIsActive, loginTabIsActive } = useSelector(
-		(state: TState) => state.registration
+		(state) => state.registration
 	);
 	const setActiveMainTab = (): void => {
 		dispatch({ type: MAIN_TAB_IS_ACTIVE });

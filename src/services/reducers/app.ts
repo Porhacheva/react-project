@@ -1,4 +1,3 @@
-import { TIngredient } from '@/utils/types';
 import {
 	GET_INGREDIENTS_REQUEST,
 	GET_INGREDIENTS_SUCCESS,
@@ -12,6 +11,7 @@ import {
 	INCREASE_ITEM,
 	SWAP_ITEMS,
 } from '../actions/constructor';
+import { TIngredient } from '../types';
 
 const initialState = {
 	ingredients: [],

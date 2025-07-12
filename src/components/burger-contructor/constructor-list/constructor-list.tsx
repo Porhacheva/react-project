@@ -1,14 +1,13 @@
 import React, { ReactNode } from 'react';
 import styles from './constructor-list.module.css';
-import { TIngredient } from '@/utils/types';
 import { ConstructorItem } from '../constructor-item/constructor-item';
-import { useDispatch } from 'react-redux';
 import {
 	DECREASE_ITEM,
 	DELETE_INGREDIENT_FROM_CONSTRUCTOR,
 	SWAP_ITEMS,
 } from '../../../services/actions/constructor';
-import { TDispatch } from '@/main';
+import { useDispatch } from '@/services/types/hooks';
+import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
 	ingredients?: TIngredient[];
@@ -19,7 +18,7 @@ export const ConstructorList = ({
 	ingredients,
 	bun,
 }: TBurgerIngredientsProps): React.JSX.Element => {
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const deleteItem = (item: TIngredient, index: number): void => {
 		dispatch({ type: DECREASE_ITEM, item });
 		dispatch({ type: DELETE_INGREDIENT_FROM_CONSTRUCTOR, index });

@@ -1,12 +1,11 @@
-import { TIngredient } from '@/utils/types';
 import { Price } from '@/components/price/price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredients-item.module.css';
-import { useDispatch } from 'react-redux';
 import { OPEN_INGREDIENTS_MODAL } from '../../../services/actions/currentIngredient';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
-import { TDispatch } from '@/main';
+import { useDispatch } from '@/services/types/hooks';
+import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
 	ingredient: TIngredient;
@@ -16,7 +15,7 @@ export const IngredientsItem = ({
 	ingredient,
 }: TBurgerIngredientsProps): React.JSX.Element => {
 	const { state } = useLocation();
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',

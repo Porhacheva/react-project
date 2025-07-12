@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import {
 	Link,
 	Navigate,
@@ -9,18 +8,18 @@ import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
 import { useEffect, useState } from 'react';
 import { postEmailToResetPassword } from '@/services/actions/registration';
 import { checkAuthToken } from '@/utils/helper';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
+import styles from './login.module.css';
 
 export const ForgotPasswordPage = (): React.JSX.Element => {
 	const [value, setValue] = useState<string>('');
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 	const { revivePasswordPageIsVisited } = useSelector(
-		(state: TState) => state.registration
+		(state) => state.registration
 	);
 
 	const revivePassword = async (

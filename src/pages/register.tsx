@@ -10,18 +10,17 @@ import {
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { postRegistration } from '@/services/actions/registration';
 import { checkAuthToken } from '@/utils/helper';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 
 export const RegisterPage = (): React.JSX.Element => {
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
-	const { isAuth, error } = useSelector((state: TState) => state.registration);
+	const { isAuth, error } = useSelector((state) => state.registration);
 
 	const register = async (
 		e: React.FormEvent<HTMLFormElement>

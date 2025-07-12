@@ -1,23 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../components/app/app.module.css';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients.tsx';
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor.tsx';
 import { Preloader } from '../components/preloader/preloader';
-import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { getIngredients } from '../services/actions/app';
 import { Outlet } from 'react-router-dom';
-import { TDispatch, TState } from '@/main';
+import { useSelector } from '@/services/types/hooks';
 
 export const HomePage = (): React.JSX.Element => {
-	const dispatch = useDispatch<TDispatch>();
 	const { ingredients, ingredientsRequest, ingredientsRequestFailed } =
-		useSelector((state: TState) => state.app);
-
-	useEffect((): void => {
-		dispatch(getIngredients());
-	}, [dispatch]);
+		useSelector((state) => state.app);
 
 	return (
 		<div className={styles.app}>
@@ -35,7 +28,7 @@ export const HomePage = (): React.JSX.Element => {
 					</h1>
 					<main className={`${styles.main} pl-5 pr-5`}>
 						<DndProvider backend={HTML5Backend}>
-							<BurgerIngredients ingredients={ingredients} />
+							<BurgerIngredients />
 							<BurgerConstructor />
 						</DndProvider>
 					</main>

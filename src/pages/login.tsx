@@ -6,21 +6,20 @@ import {
 	useNavigate,
 } from 'react-router-dom';
 import { postLogin } from '@/services/actions/registration';
-import { useDispatch, useSelector } from 'react-redux';
 import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { checkAuthToken } from '@/utils/helper';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 
 export const LoginPage = (): React.JSX.Element => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
-	const { isAuth, error } = useSelector((state: TState) => state.registration);
+	const { isAuth, error } = useSelector((state) => state.registration);
 
 	const logIn = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();

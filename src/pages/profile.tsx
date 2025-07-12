@@ -9,20 +9,19 @@ import {
 	postRefreshToken,
 	LOGOUT,
 } from '@/services/actions/registration';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
 	Button,
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { TUser } from '@/utils/types';
 import { Preloader } from '@/components/preloader/preloader';
 import { deleteCookie } from '@/utils/helper';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
+import { TUser } from '@/services/types/api';
 
 export const ProfilePage = (): React.JSX.Element => {
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 	const {
 		registrationRequest,
@@ -32,7 +31,7 @@ export const ProfilePage = (): React.JSX.Element => {
 		name,
 		email,
 		password,
-	} = useSelector((state: TState) => state.registration);
+	} = useSelector((state) => state.registration);
 	useEffect((): void => {
 		init();
 	}, [name, email, password]);

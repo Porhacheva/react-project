@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import {
 	Input,
@@ -7,15 +6,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { postResetPassword } from '@/services/actions/registration';
-import { TPostResetPasswordRequest } from '@/utils/types';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
+import { TPostResetPasswordRequest } from '@/services/types/api';
 
 export const ResetPasswordPage = (): React.JSX.Element => {
 	const [newPassword, setNewPassword] = useState<string>('');
 	const [code, setCode] = useState<string>('');
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const { revivePasswordPageIsVisited } = useSelector(
-		(state: TState) => state.registration
+		(state) => state.registration
 	);
 	const navigate: NavigateFunction = useNavigate();
 

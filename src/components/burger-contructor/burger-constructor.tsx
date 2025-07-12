@@ -1,4 +1,3 @@
-import { TIngredient } from '@utils/types.ts';
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorList } from './constructor-list/constructor-list';
@@ -6,7 +5,6 @@ import { Price } from '@/components/price/price';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../modal/order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
 import { CLOSE_ORDER_MODAL, createOrder } from '../../services/actions/order';
 import {
 	ADD_BUN_TO_CONSTRUCTOR,
@@ -19,22 +17,21 @@ import { nanoid } from '@reduxjs/toolkit';
 import { checkAuthToken } from '@/utils/helper';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { LOGIN_TAB_IS_ACTIVE } from '@/services/actions/registration';
-import { TDispatch, TState } from '@/main';
+import { TIngredient } from '@/services/types';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 
 type TItem = {
 	ingredient: TIngredient;
 };
 
 export const BurgerConstructor = (): React.JSX.Element => {
-	const dispatch = useDispatch<TDispatch>();
+	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 	const { constructorIngredients, bun, price } = useSelector(
-		(state: TState) => state.app
+		(state) => state.app
 	);
-	const { orderNumber, isModalOpen } = useSelector(
-		(state: TState) => state.order
-	);
-	const { isAuth } = useSelector((state: TState) => state.registration);
+	const { orderNumber, isModalOpen } = useSelector((state) => state.order);
+	const { isAuth } = useSelector((state) => state.registration);
 
 	const [, dropTarget] = useDrop<TItem>({
 		accept: 'ingredient',

@@ -1,4 +1,4 @@
-import { TAPIMethods } from './types';
+import { TAPIMethods } from '@/services/types';
 
 export async function doRequest<T>(
 	url: string,

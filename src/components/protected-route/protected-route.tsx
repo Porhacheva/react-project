@@ -1,9 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { AUTH } from '@/services/actions/registration';
 import { checkAuthToken } from '@/utils/helper';
-import { TDispatch, TState } from '@/main';
+import { useDispatch, useSelector } from '@/services/types/hooks';
 
 type TProtectedRouteProps = {
 	element: React.JSX.Element;
@@ -12,8 +11,8 @@ type TProtectedRouteProps = {
 export const ProtectedRouteElement = ({
 	element,
 }: TProtectedRouteProps): React.JSX.Element | null => {
-	const dispatch = useDispatch<TDispatch>();
-	const { isAuth } = useSelector((state: TState) => state.registration);
+	const dispatch = useDispatch();
+	const { isAuth } = useSelector((state) => state.registration);
 	const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 
 	const init = async (): Promise<void> => {

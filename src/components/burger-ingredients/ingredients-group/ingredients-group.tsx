@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styles from './ingredients-group.module.css';
-import { TIngredient } from '@/utils/types';
 import { IngredientsItem } from '../ingredients-item/ingredients-item';
 import { nanoid } from '@reduxjs/toolkit';
+import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
 	groupName: string;

@@ -1,4 +1,3 @@
-import { TDispatch } from '@/main';
 import { url } from '@/utils/constants';
 import {
 	deleteCookie,
@@ -8,42 +7,52 @@ import {
 	getToken,
 	setCookie,
 } from '@/utils/helper';
+import { AppDispatch } from '../types';
 import {
-	TPostRegistrationRequest,
-	TResponce,
-	TPostResetPasswordRequest,
 	TPostLoginResponce,
-	TPostLoginRequest,
-	TPostTokenResponce,
 	TUser,
-} from '@/utils/types';
+	TPostRegistrationRequest,
+	TPostLoginRequest,
+	TResponce,
+	TPostTokenResponce,
+	TPostResetPasswordRequest,
+} from '../types/api';
 
-export const GET_REGISTRATION_REQUEST = 'GET_REGISTRATION_REQUEST';
-export const GET_REGISTRATION_SUCCESS = 'GET_REGISTRATION_SUCCESS';
-export const GET_REGISTRATION_FAILED = 'GET_REGISTRATION_FAILED';
+export const GET_REGISTRATION_REQUEST: 'GET_REGISTRATION_REQUEST' =
+	'GET_REGISTRATION_REQUEST' as const;
+export const GET_REGISTRATION_SUCCESS: 'GET_REGISTRATION_SUCCESS' =
+	'GET_REGISTRATION_SUCCESS' as const;
+export const GET_REGISTRATION_FAILED: 'GET_REGISTRATION_FAILED' =
+	'GET_REGISTRATION_FAILED' as const;
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
-export const SAVE_PASSWORD = 'SAVE_PASSWORD';
-export const AUTH = 'AUTH';
+export const LOGIN: 'LOGIN' = 'LOGIN' as const;
+export const LOGOUT: 'LOGOUT' = 'LOGOUT' as const;
+export const SAVE_PASSWORD: 'SAVE_PASSWORD' = 'SAVE_PASSWORD' as const;
+export const AUTH: 'AUTH' = 'AUTH' as const;
 
 //tabs
-export const MAIN_TAB_IS_ACTIVE = 'MAIN_TAB_IS_ACTIVE';
-export const FEED_TAB_IS_ACTIVE = 'FEED_TAB_IS_ACTIVE';
-export const LOGIN_TAB_IS_ACTIVE = 'LOGIN_TAB_IS_ACTIVE';
+export const MAIN_TAB_IS_ACTIVE: 'MAIN_TAB_IS_ACTIVE' =
+	'MAIN_TAB_IS_ACTIVE' as const;
+export const FEED_TAB_IS_ACTIVE: 'FEED_TAB_IS_ACTIVE' =
+	'FEED_TAB_IS_ACTIVE' as const;
+export const LOGIN_TAB_IS_ACTIVE: 'LOGIN_TAB_IS_ACTIVE' =
+	'LOGIN_TAB_IS_ACTIVE' as const;
 
-export const PROFILE_TAB_IS_ACTIVE = 'PROFILE_TAB_IS_ACTIVE';
-export const HISTORY_TAB_IS_ACTIVE = 'HISTORY_TAB_IS_ACTIVE';
-export const LOGOUT_TAB_IS_ACTIVE = 'LOGOUT_TAB_IS_ACTIVE';
+export const PROFILE_TAB_IS_ACTIVE: 'PROFILE_TAB_IS_ACTIVE' =
+	'PROFILE_TAB_IS_ACTIVE' as const;
+export const HISTORY_TAB_IS_ACTIVE: 'HISTORY_TAB_IS_ACTIVE' =
+	'HISTORY_TAB_IS_ACTIVE' as const;
+export const LOGOUT_TAB_IS_ACTIVE: 'LOGOUT_TAB_IS_ACTIVE' =
+	'LOGOUT_TAB_IS_ACTIVE' as const;
 
-export const REVIVE_PASSWORD_PAGE_IS_VISITED =
-	'REVIVE_PASSWORD_PAGE_IS_VISITED';
+export const REVIVE_PASSWORD_PAGE_IS_VISITED: 'REVIVE_PASSWORD_PAGE_IS_VISITED' =
+	'REVIVE_PASSWORD_PAGE_IS_VISITED' as const;
 
 export function getAuthUser(): (
-	dispatch: TDispatch
+	dispatch: AppDispatch
 ) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: TDispatch
+		dispatch: AppDispatch
 	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
@@ -73,9 +82,9 @@ export function getAuthUser(): (
 }
 export function patchUser(
 	data: TUser
-): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: TDispatch
+		dispatch: AppDispatch
 	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
@@ -107,9 +116,9 @@ export function patchUser(
 
 export function postRegistration(
 	data: TPostRegistrationRequest
-): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: TDispatch
+		dispatch: AppDispatch
 	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
@@ -141,9 +150,9 @@ export function postRegistration(
 
 export function postLogin(
 	data: TPostLoginRequest
-): (dispatch: TDispatch) => Promise<TPostLoginResponce | undefined> {
+): (dispatch: AppDispatch) => Promise<TPostLoginResponce | undefined> {
 	return async function (
-		dispatch: TDispatch
+		dispatch: AppDispatch
 	): Promise<TPostLoginResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
@@ -172,9 +181,11 @@ export function postLogin(
 	};
 }
 export function postLogout(): (
-	dispatch: TDispatch
+	dispatch: AppDispatch
 ) => Promise<TResponce | undefined> {
-	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -196,10 +207,10 @@ export function postLogout(): (
 }
 
 export function postRefreshToken(): (
-	dispatch: TDispatch
+	dispatch: AppDispatch
 ) => Promise<TPostTokenResponce | undefined> {
 	return async function (
-		dispatch: TDispatch
+		dispatch: AppDispatch
 	): Promise<TPostTokenResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
@@ -228,8 +239,10 @@ export function postRefreshToken(): (
 
 export function postEmailToResetPassword(
 	email: string
-): (dispatch: TDispatch) => Promise<TResponce | undefined> {
-	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
+): (dispatch: AppDispatch) => Promise<TResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});
@@ -249,8 +262,10 @@ export function postEmailToResetPassword(
 
 export function postResetPassword(
 	data: TPostResetPasswordRequest
-): (dispatch: TDispatch) => Promise<TResponce | undefined> {
-	return async function (dispatch: TDispatch): Promise<TResponce | undefined> {
+): (dispatch: AppDispatch) => Promise<TResponce | undefined> {
+	return async function (
+		dispatch: AppDispatch
+	): Promise<TResponce | undefined> {
 		dispatch({
 			type: GET_REGISTRATION_REQUEST,
 		});

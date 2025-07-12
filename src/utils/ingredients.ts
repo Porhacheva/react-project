@@ -1,4 +1,4 @@
-import { TIngredient } from '@utils/types.ts';
+import { TIngredient } from '@/services/types';
 
 export const ingredients: TIngredient[] = [
 	{

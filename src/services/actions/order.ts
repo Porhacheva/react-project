@@ -1,19 +1,22 @@
-import { TDispatch } from '@/main';
 import { url } from '@/utils/constants';
 import { doRequest } from '@/utils/helper';
-import { TOrderResponce } from '@/utils/types';
+import { AppDispatch } from '../types';
+import { TOrderResponce } from '../types/api';
 
-export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' =
+	'GET_ORDER_REQUEST' as const;
+export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' =
+	'GET_ORDER_SUCCESS' as const;
+export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED' as const;
 
-export const OPEN_ORDER_MODAL = 'OPEN_ORDER_MODAL';
-export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
+export const OPEN_ORDER_MODAL: 'OPEN_ORDER_MODAL' = 'OPEN_ORDER_MODAL' as const;
+export const CLOSE_ORDER_MODAL: 'CLOSE_ORDER_MODAL' =
+	'CLOSE_ORDER_MODAL' as const;
 
 export function createOrder(list: {
 	ingredients: string[];
-}): (dispatch: TDispatch) => Promise<void> {
-	return async function (dispatch: TDispatch): Promise<void> {
+}): (dispatch: AppDispatch) => Promise<void> {
+	return async function (dispatch: AppDispatch): Promise<void> {
 		dispatch({
 			type: GET_ORDER_REQUEST,
 		});

@@ -1,7 +1,7 @@
-import { TIconTypes } from '@utils/types.ts';
 import React from 'react';
 import styles from './price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIconTypes } from '@/services/types';
 
 type TPriceProps = {
 	price?: number;

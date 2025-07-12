@@ -1,14 +1,10 @@
 import React, { Ref, useEffect, useRef, useState } from 'react';
 import styles from './burger-ingredients.module.css';
-import { TIngredient } from '@utils/types.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsGroup } from './ingredients-group/ingredients-group';
-import { useSelector } from 'react-redux';
-import { TState } from '@/main';
+import { useSelector } from '@/services/types/hooks';
+import { TIngredient } from '@/services/types';
 
-type TBurgerIngredientsProps = {
-	ingredients: TIngredient[];
-};
 interface IGroupObject {
 	[name: string]: TIngredient[];
 }
@@ -25,14 +21,12 @@ function getGroups(ingredients: TIngredient[]): IGroupObject {
 	return obj;
 }
 
-export const BurgerIngredients = ({
-	ingredients,
-}: TBurgerIngredientsProps): React.JSX.Element => {
+export const BurgerIngredients = (): React.JSX.Element => {
 	const [buns, setBuns] = useState<TIngredient[]>([]);
 	const [mains, setMains] = useState<TIngredient[]>([]);
 	const [sauces, setSauses] = useState<TIngredient[]>([]);
-	const { constructorIngredients, bun } = useSelector(
-		(state: TState) => state.app
+	const { constructorIngredients, bun, ingredients } = useSelector(
+		(state) => state.app
 	);
 	const scrollRef: Ref<HTMLElement> = useRef<HTMLElement>(null);
 	const bunRef: Ref<HTMLHeadingElement> = useRef<HTMLHeadingElement>(null);
@@ -76,7 +70,7 @@ export const BurgerIngredients = ({
 				setSauseTab(true);
 			}
 		});
-	}, [constructorIngredients, bun]);
+	}, [constructorIngredients, bun, ingredients]);
 
 	return (
 		<section className={styles.burger_ingredients}>
