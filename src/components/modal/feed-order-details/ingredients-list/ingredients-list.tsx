@@ -1,5 +1,4 @@
 import { TIngredient } from '@/services/types';
-import { nanoid } from '@reduxjs/toolkit';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ReactNode } from 'react';
 import styles from './ingredients-list.module.css';
@@ -22,7 +21,7 @@ export const IngredientsList = ({
 							size='small'
 							extraClass={styles.button}
 							onClick={(): void => {}}
-							key={nanoid()}>
+							key={ingredient._id}>
 							<img
 								src={ingredient.image_mobile}
 								className={styles.image}

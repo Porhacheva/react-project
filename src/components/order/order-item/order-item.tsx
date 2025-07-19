@@ -62,7 +62,11 @@ export const OrderItem = ({ order }: TFOrderItemProps): React.JSX.Element => {
 	}, []);
 
 	return (
-		<Link to={`/feed/${order._id}`} state={state} onClick={handleOpenModal}>
+		<Link
+			to={`/feed/${order._id}`}
+			state={state}
+			onClick={handleOpenModal}
+			key={order._id}>
 			<div className={`${styles.card} mb-4 mr-2 p-6`}>
 				<div className={styles.info}>
 					<p className='text_type_digits-default'>#{number}</p>

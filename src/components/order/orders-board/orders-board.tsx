@@ -3,7 +3,6 @@ import styles from './orders-board.module.css';
 import { useEffect, useState } from 'react';
 import { useSelector } from '@/services/types/hooks';
 import { getOrderNumber } from '@/utils/helper';
-import { nanoid } from '@reduxjs/toolkit';
 
 function getArrays(orders: TOrderData[]): string[][][] {
 	const done: string[] = [];
@@ -48,44 +47,48 @@ export const OrdersBoard = (): React.JSX.Element => {
 		<div className={styles.board}>
 			<div className={styles['table-column']}>
 				<div className={`${styles.header} text_type_main-medium`}>Готовы:</div>
-				<div className={styles.box} key={nanoid()}>
-					{doneOrders.map((orders: string[]): React.JSX.Element => {
-						return (
-							<div className={styles.column}>
-								{orders.map((order: string): React.JSX.Element => {
-									return (
-										<div
-											className='text_type_digits-default text_color_success mb-2'
-											key={order}>
-											{order}
-										</div>
-									);
-								})}
-							</div>
-						);
-					})}
+				<div className={styles.box}>
+					{doneOrders.map(
+						(orders: string[], index: number): React.JSX.Element => {
+							return (
+								<div className={styles.column} key={`done${index}`}>
+									{orders.map((order: string): React.JSX.Element => {
+										return (
+											<div
+												className='text_type_digits-default text_color_success mb-2'
+												key={order}>
+												{order}
+											</div>
+										);
+									})}
+								</div>
+							);
+						}
+					)}
 				</div>
 			</div>
 			<div className={styles['table-column']}>
 				<div className={`${styles.header} text_type_main-medium`}>
 					В работе:
 				</div>
-				<div className={styles.box} key={nanoid()}>
-					{pendingOrders.map((orders: string[]): React.JSX.Element => {
-						return (
-							<div className={styles.column}>
-								{orders.map((order: string): React.JSX.Element => {
-									return (
-										<div
-											className='text_type_digits-default text_color_success mb-2'
-											key={order}>
-											{order}
-										</div>
-									);
-								})}
-							</div>
-						);
-					})}
+				<div className={styles.box}>
+					{pendingOrders.map(
+						(orders: string[], index: number): React.JSX.Element => {
+							return (
+								<div className={styles.column} key={`pending${index}`}>
+									{orders.map((order: string): React.JSX.Element => {
+										return (
+											<div
+												className='text_type_digits-default text_color_success mb-2'
+												key={order}>
+												{order}
+											</div>
+										);
+									})}
+								</div>
+							);
+						}
+					)}
 				</div>
 			</div>
 		</div>

@@ -2,7 +2,6 @@ import { TIngredient } from '@/services/types';
 import styles from './images-stack.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ReactNode, useEffect, useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
 
 type TFeedItemProps = {
 	ingredients: TIngredient[];
@@ -33,7 +32,7 @@ export const ImagesStack = ({
 						extraClass={styles.button}
 						style={{ zIndex: ingredients.length - index }}
 						onClick={(): void => {}}
-						key={nanoid()}>
+						key={index}>
 						<img
 							src={ingredient.image_mobile}
 							className={styles.image}

@@ -30,7 +30,7 @@ const orderState: TOrderState = {
 
 function getDigits(number: number): string {
 	const orderNumber: string = number.toString();
-	return orderNumber.padStart(7, '0');
+	return orderNumber.padStart(6, '0');
 }
 
 export const orderReducer = (state = orderState, action: TOrderActions) => {

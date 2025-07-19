@@ -25,7 +25,6 @@ const initialState: TWSState = {
 
 // Создадим редьюсер для WebSocket
 export const wsReducer = (state = initialState, action: TWSActions) => {
-	console.log(action.type);
 	switch (action.type) {
 		case WS_CONNECTION_START:
 			return {
