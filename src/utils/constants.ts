@@ -15,3 +15,5 @@ export const url: IUrl = {
 	passwordForgotUrl: '/password-reset',
 	passwordResetUrl: '/reset',
 };
+
+export const wsUrl: string = 'wss://norma.nomoreparties.space/orders';

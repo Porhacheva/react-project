@@ -53,3 +53,25 @@ export type TOrderResponce = {
 		number: number;
 	};
 };
+
+export type TOrderData = {
+	ingredients: string[];
+	_id: string;
+	status: string;
+	name: string;
+	number: number;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type TAllOrdersResponce = {
+	success: boolean;
+	orders: TOrderData[];
+	total: number;
+	totalToday: number;
+};
+
+export type TFeedOrderResponce = {
+	success: boolean;
+	orders: TOrderData[];
+};

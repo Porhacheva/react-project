@@ -14,24 +14,29 @@ import {
 	LOGOUT_TAB_IS_ACTIVE,
 	REVIVE_PASSWORD_PAGE_IS_VISITED,
 } from '../actions/registration';
+import { TUser } from './api';
 
 interface IGetRegistrationAction {
 	readonly type: typeof GET_REGISTRATION_REQUEST;
 }
 interface IGetRegistrationSuccessAction {
 	readonly type: typeof GET_REGISTRATION_SUCCESS;
+	readonly response: { user: TUser };
 }
 interface IGetRegistrationFailedAction {
 	readonly type: typeof GET_REGISTRATION_FAILED;
+	readonly error?: unknown;
 }
 interface ILoginAction {
 	readonly type: typeof LOGIN;
+	readonly response: { user: TUser };
 }
 interface ILogoutAction {
 	readonly type: typeof LOGOUT;
 }
 interface ISavePasswordAction {
 	readonly type: typeof SAVE_PASSWORD;
+	readonly password?: string;
 }
 interface IAuthAction {
 	readonly type: typeof AUTH;

@@ -1,4 +1,4 @@
-import { TAPIMethods } from '@/services/types';
+import { TAPIMethods, TIngredient } from '@/services/types';
 
 export async function doRequest<T>(
 	url: string,
@@ -95,4 +95,36 @@ export function getToken(token: string | undefined): string | undefined {
 
 export function checkAuthToken(): string | undefined {
 	return getCookie('token');
+}
+
+export function getOrderNumber(number: number): string {
+	const stringNumber: string = number.toString();
+	if (stringNumber.length < 6) {
+		return stringNumber.padStart(6, '0');
+	}
+	return stringNumber;
+}
+
+export function getOrderIngredients(
+	orderIds: string[],
+	ingredients: TIngredient[]
+): TIngredient[] {
+	const orderIngredients: TIngredient[] = [];
+	orderIds.map((id: string) => {
+		const item: TIngredient | undefined = ingredients.find(
+			(ingredient: TIngredient) => ingredient._id === id
+		);
+		if (item) {
+			orderIngredients.push(item);
+		}
+	});
+	return orderIngredients;
+}
+
+export function getOrderPrice(orderIngredients: TIngredient[]): number {
+	let count: number = 0;
+	orderIngredients.forEach((ingredient: TIngredient) => {
+		count += ingredient.price;
+	});
+	return count;
 }

@@ -4,7 +4,7 @@ import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from './styles/login.module.css';
 import { postResetPassword } from '@/services/actions/registration';
 import { useDispatch, useSelector } from '@/services/types/hooks';
 import { TPostResetPasswordRequest } from '@/services/types/api';

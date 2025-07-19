@@ -14,7 +14,7 @@ import {
 	Button,
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './profile.module.css';
+import styles from './styles/profile.module.css';
 import { Preloader } from '@/components/preloader/preloader';
 import { deleteCookie } from '@/utils/helper';
 import { useDispatch, useSelector } from '@/services/types/hooks';
@@ -34,10 +34,10 @@ export const ProfilePage = (): React.JSX.Element => {
 	} = useSelector((state) => state.registration);
 	useEffect((): void => {
 		init();
-	}, [name, email, password]);
+	}, []);
 	const [newName, setName] = useState<string>(name);
 	const [newEmail, setEmail] = useState<string>(email);
-	const [newPassword, setPassword] = useState<string>(password);
+	const [newPassword, setPassword] = useState<string>(password || '12345');
 
 	async function tryAgain(): Promise<void> {
 		try {
@@ -55,10 +55,8 @@ export const ProfilePage = (): React.JSX.Element => {
 	const init = async (): Promise<void> => {
 		try {
 			await dispatch(getAuthUser());
-		} catch (error: any) {
-			if (error.message.includes('expired')) {
-				await tryAgain();
-			}
+		} catch {
+			await tryAgain();
 		}
 		setActiveProfileTab();
 	};
@@ -77,7 +75,7 @@ export const ProfilePage = (): React.JSX.Element => {
 	const reset = (): void => {
 		setName(name);
 		setEmail(email);
-		setPassword(password);
+		setPassword(password!);
 	};
 
 	const save = (e: React.FormEvent<HTMLFormElement>): void => {

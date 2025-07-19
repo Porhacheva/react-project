@@ -1,0 +1,9 @@
+.orders-list {
+	height: 100%;
+	margin-right: 60px;
+	overflow-y: scroll;
+}
+
+.column {
+	flex: 1 0 48%;
+}
