@@ -2,13 +2,23 @@ import {
 	OPEN_INGREDIENTS_MODAL,
 	CLOSE_INGREDIENTS_MODAL,
 } from '../actions/currentIngredient';
+import { TIngredient } from '../types';
+import { TIngredientsActions } from '../types/actions';
 
-const ingredientsState = {
+type TIngredientState = {
+	currentIngredient: TIngredient | null;
+	isModalOpen: boolean;
+};
+
+const ingredientsState: TIngredientState = {
 	currentIngredient: null,
 	isModalOpen: false,
 };
 
-export const ingredientsReducer = (state = ingredientsState, action: any) => {
+export const ingredientsReducer = (
+	state = ingredientsState,
+	action: TIngredientsActions
+) => {
 	switch (action.type) {
 		case OPEN_INGREDIENTS_MODAL: {
 			return {

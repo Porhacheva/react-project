@@ -14,8 +14,27 @@ import {
 	AUTH,
 	REVIVE_PASSWORD_PAGE_IS_VISITED,
 } from '../actions/registration';
+import { TRegistrationActions } from '../types/registration-actions';
 
-const registrationState = {
+type TRegistrationState = {
+	registrationRequest: boolean;
+	registrationRequestFailed: boolean;
+	isAuth: boolean;
+	email: string;
+	name: string;
+	password: string;
+	accessToken: string;
+	error: string;
+	mainTabIsActive: boolean;
+	feedTabIsActive: boolean;
+	loginTabIsActive: boolean;
+	profileTabIsActive: boolean;
+	historyTabIsActive: boolean;
+	logoutTabIsActive: boolean;
+	revivePasswordPageIsVisited: boolean;
+};
+
+const registrationState: TRegistrationState = {
 	registrationRequest: false,
 	registrationRequestFailed: false,
 	isAuth: false,
@@ -36,7 +55,10 @@ const registrationState = {
 	revivePasswordPageIsVisited: false,
 };
 
-export const registrationReducer = (state = registrationState, action: any) => {
+export const registrationReducer = (
+	state = registrationState,
+	action: TRegistrationActions
+) => {
 	switch (action.type) {
 		case GET_REGISTRATION_REQUEST: {
 			return {

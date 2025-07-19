@@ -1,0 +1,32 @@
+.list {
+	max-height: 330px;
+	overflow-y: scroll;
+}
+
+.image {
+	display: block;
+	width: 64px;
+	height: 64px;
+	background-color: var(--background-alt);
+	background-size: contain;
+	border-radius: 100%;
+}
+
+.button {
+	position: relative;
+	padding: 2px;
+}
+
+.list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.name {
+	flex-grow: 1;
+}
+
+.price {
+	display: flex;
+}

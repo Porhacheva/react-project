@@ -81,7 +81,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	return (
 		<section className={styles.burger_constructor} ref={dropTarget}>
 			{constructorIngredients.length || bun ? (
-				<ConstructorList bun={bun} ingredients={constructorIngredients} />
+				<ConstructorList bun={bun!} ingredients={constructorIngredients} />
 			) : (
 				<div className='m-10'>
 					<span>Перетащите ингредиенты в конструктор</span>

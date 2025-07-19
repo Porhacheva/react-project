@@ -1,0 +1,26 @@
+.board {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.table-column {
+	flex-basis: 50%;
+}
+
+.header {
+	align-self: flex-start;
+}
+
+.box {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	height: 250px;
+	overflow-y: scroll;
+}
+
+.column {
+	margin: 24px;
+	margin-left: 0;
+}

@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { postEmailToResetPassword } from '@/services/actions/registration';
 import { checkAuthToken } from '@/utils/helper';
 import { useDispatch, useSelector } from '@/services/types/hooks';
-import styles from './login.module.css';
+import styles from './styles/login.module.css';
 
 export const ForgotPasswordPage = (): React.JSX.Element => {
 	const [value, setValue] = useState<string>('');
