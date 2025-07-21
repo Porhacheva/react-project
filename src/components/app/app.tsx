@@ -16,6 +16,7 @@ import {
 import { ProtectedRouteElement } from '../protected-route/protected-route';
 import { getIngredients } from '@/services/actions/app';
 import { useDispatch } from '@/services/types/hooks';
+import { OrderModalPage } from '@/pages/order-modal';
 
 export const App = (): React.JSX.Element => {
 	const dispatch = useDispatch();
@@ -32,11 +33,13 @@ export const App = (): React.JSX.Element => {
 				</Route>
 				<Route path='/login' element={<LoginPage />} />
 				<Route path='/feed' element={<FeedPage />} />
+				<Route path='/feed/:id' element={<OrderModalPage />} />
 				<Route
 					path='/profile'
 					element={<ProtectedRouteElement element={<ProfilePage />} />}>
 					<Route path='orders' element={<HistoryPage />} />
 				</Route>
+				<Route path='/profile/orders/:id' element={<OrderModalPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/forgot-password' element={<ForgotPasswordPage />} />
 				<Route path='/reset-password' element={<ResetPasswordPage />} />

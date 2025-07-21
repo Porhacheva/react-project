@@ -2,9 +2,9 @@
 	display: flex;
 	justify-content: start;
 	max-width: 1240px;
-	height: calc(100vh - 88px);
+	height: calc(100vh - 88px - 160px);
 	margin: auto;
-	padding: 120px 16px 0;
+	padding: 120px 16px 40px;
 }
 
 .menu {

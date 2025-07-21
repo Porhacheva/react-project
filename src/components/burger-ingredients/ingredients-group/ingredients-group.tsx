@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import styles from './ingredients-group.module.css';
 import { IngredientsItem } from '../ingredients-item/ingredients-item';
-import { nanoid } from '@reduxjs/toolkit';
 import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
@@ -21,7 +20,7 @@ export const IngredientsGroup = React.forwardRef<
 			</h2>
 			<div className={styles.group}>
 				{groupItems.map((item): ReactNode => {
-					return <IngredientsItem ingredient={item} key={nanoid()} />;
+					return <IngredientsItem ingredient={item} key={item._id} />;
 				})}
 			</div>
 		</>
