@@ -38,8 +38,8 @@ export const App = (): React.JSX.Element => {
 					path='/profile'
 					element={<ProtectedRouteElement element={<ProfilePage />} />}>
 					<Route path='orders' element={<HistoryPage />} />
-					<Route path='orders/:id' element={<OrderModalPage />} />
 				</Route>
+				<Route path='/profile/orders/:id' element={<OrderModalPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/forgot-password' element={<ForgotPasswordPage />} />
 				<Route path='/reset-password' element={<ResetPasswordPage />} />

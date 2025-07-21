@@ -63,7 +63,7 @@ export const OrderItem = ({ order }: TFOrderItemProps): React.JSX.Element => {
 
 	return (
 		<Link
-			to={`/feed/${order._id}`}
+			to={`/${loginTabIsActive ? 'profile/orders' : 'feed'}/${order._id}`}
 			state={state}
 			onClick={handleOpenModal}
 			key={order._id}>

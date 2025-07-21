@@ -41,7 +41,7 @@ export const OrdersBoard = (): React.JSX.Element => {
 
 		setDoneOrders(x);
 		setPendingOrders(y);
-	}, []);
+	}, [orders]);
 
 	return (
 		<div className={styles.board}>

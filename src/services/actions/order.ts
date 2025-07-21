@@ -1,5 +1,5 @@
 import { url } from '@/utils/constants';
-import { doRequest } from '@/utils/helper';
+import { doAuthRequest, doRequest } from '@/utils/helper';
 import { AppDispatch } from '../types';
 import { TFeedOrderResponce, TOrderResponce } from '../types/api';
 
@@ -23,8 +23,9 @@ export function createOrder(list: {
 			type: GET_ORDER_REQUEST,
 		});
 		try {
-			const order: TOrderResponce = await doRequest(
+			const order: TOrderResponce = await doAuthRequest(
 				url.apiUrl + url.orderUrl,
+				'token',
 				'POST',
 				list
 			);
