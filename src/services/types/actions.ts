@@ -30,27 +30,34 @@ interface IGetIngredientsFailedAction {
 }
 interface IAddIngredientToConstructorAction {
 	readonly type: typeof ADD_INGREDIENT_TO_CONSTRUCTOR;
+	readonly ingredient: { ingredient: TIngredient; key: string };
 }
 interface IAddBunToConstructorAction {
 	readonly type: typeof ADD_BUN_TO_CONSTRUCTOR;
+	readonly ingredient: TIngredient;
 }
 interface IDeleteIngredientFromConstructorAction {
 	readonly type: typeof DELETE_INGREDIENT_FROM_CONSTRUCTOR;
+	readonly index: number;
 }
 interface IIncreaseItemAction {
 	readonly type: typeof INCREASE_ITEM;
+	readonly ingredient: TIngredient;
 }
 interface IDecreaseItemAction {
 	readonly type: typeof DECREASE_ITEM;
+	readonly item: TIngredient;
 }
 interface IUpdatePriceAction {
 	readonly type: typeof UPDATE_PRICE;
 }
 interface ISwapItemsAction {
 	readonly type: typeof SWAP_ITEMS;
+	readonly newarr: TIngredient[];
 }
 interface IOpenIngredientsModalAction {
 	readonly type: typeof OPEN_INGREDIENTS_MODAL;
+	readonly ingredient: TIngredient;
 }
 interface ICloseIngredientsModalAction {
 	readonly type: typeof CLOSE_INGREDIENTS_MODAL;

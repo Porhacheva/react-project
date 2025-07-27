@@ -10,7 +10,7 @@ import {
 	Input,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from './styles/login.module.css';
 import { checkAuthToken } from '@/utils/helper';
 import { useDispatch, useSelector } from '@/services/types/hooks';
 

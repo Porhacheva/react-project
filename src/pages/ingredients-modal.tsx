@@ -11,12 +11,14 @@ export const IngredientModalPage = (): React.JSX.Element => {
 	const { ingredients } = useSelector((state) => state.app);
 	const dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
-	const [ingredient, setIngredient] = useState<TIngredient>(currentIngredient);
+	const [ingredient, setIngredient] = useState<TIngredient | undefined>(
+		currentIngredient || undefined
+	);
 	const { id } = useParams<string>();
 
 	useEffect((): void => {
 		if (!currentIngredient) {
-			const item: TIngredient = ingredients.find(
+			const item: TIngredient | undefined = ingredients.find(
 				(obj: TIngredient) => obj._id === id
 			);
 			setIngredient(item);

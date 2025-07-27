@@ -12,8 +12,18 @@ import {
 	SWAP_ITEMS,
 } from '../actions/constructor';
 import { TIngredient } from '../types';
+import { TIngredientsActions } from '../types/actions';
 
-const initialState = {
+type TAppState = {
+	ingredients: TIngredient[];
+	ingredientsRequest: boolean;
+	ingredientsRequestFailed: boolean;
+	constructorIngredients: TIngredient[];
+	bun: TIngredient | null;
+	price: number;
+};
+
+const initialState: TAppState = {
 	ingredients: [],
 	ingredientsRequest: false,
 	ingredientsRequestFailed: false,
@@ -49,7 +59,10 @@ function decreaseItem(
 	});
 }
 
-export const appReducer = (state = initialState, action: any) => {
+export const appReducer = (
+	state = initialState,
+	action: TIngredientsActions
+) => {
 	switch (action.type) {
 		case GET_INGREDIENTS_REQUEST: {
 			return {
