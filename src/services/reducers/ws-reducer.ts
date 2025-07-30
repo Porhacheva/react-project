@@ -23,7 +23,6 @@ const initialState: TWSState = {
 	totalToday: 0,
 };
 
-// Создадим редьюсер для WebSocket
 export const wsReducer = (state = initialState, action: TWSActions) => {
 	switch (action.type) {
 		case WS_CONNECTION_START:

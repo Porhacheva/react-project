@@ -12,6 +12,7 @@ export const ModalOverlay = ({
 }: TModalOverlayProps): React.JSX.Element => {
 	return (
 		<div
+			id='modalOverlay'
 			className={styles['modal-backdrop']}
 			onClick={onClick}
 			role='presentation'>

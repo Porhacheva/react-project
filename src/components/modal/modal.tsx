@@ -35,7 +35,9 @@ export const Modal = ({
 				<div
 					className={`${styles.header} text_type_main-large pt-5 pb-5 ${!header && styles['without-header']}`}>
 					{header}
-					<CloseIcon type='primary' onClick={onCloseModal} />
+					<div id='closeModal'>
+						<CloseIcon type='primary' onClick={onCloseModal} />
+					</div>
 				</div>
 				{children}
 			</div>

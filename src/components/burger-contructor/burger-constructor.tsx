@@ -79,7 +79,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	};
 
 	return (
-		<section className={styles.burger_constructor} ref={dropTarget}>
+		<section
+			className={styles.burger_constructor}
+			ref={dropTarget}
+			id='constructor'>
 			{constructorIngredients.length || bun ? (
 				<ConstructorList bun={bun!} ingredients={constructorIngredients} />
 			) : (
