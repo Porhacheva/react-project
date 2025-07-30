@@ -14,7 +14,7 @@ module.exports = {
 		'plugin:eslint-comments/recommended',
 		'plugin:postcss-modules/recommended',
 	],
-	ignorePatterns: ['dist', '.eslintrc.cjs'],
+	ignorePatterns: ['dist', '.eslintrc.cjs', '*.test.js'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 2020,
