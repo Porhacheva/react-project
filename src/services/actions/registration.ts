@@ -139,7 +139,7 @@ export function postRegistration(
 			dispatch({ type: SAVE_PASSWORD, password });
 			dispatch({ type: MAIN_TAB_IS_ACTIVE });
 			return response;
-		} catch (error: unknown) {
+		} catch (error: any) {
 			dispatch({
 				type: GET_REGISTRATION_FAILED,
 				error,

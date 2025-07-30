@@ -25,7 +25,7 @@ interface IGetRegistrationSuccessAction {
 }
 interface IGetRegistrationFailedAction {
 	readonly type: typeof GET_REGISTRATION_FAILED;
-	readonly error?: unknown;
+	readonly error?: string;
 }
 interface ILoginAction {
 	readonly type: typeof LOGIN;
