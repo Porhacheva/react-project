@@ -10,7 +10,7 @@ import { useDispatch } from '@/services/types/hooks';
 import { TIngredient } from '@/services/types';
 
 type TBurgerIngredientsProps = {
-	ingredients?: TIngredient[];
+	ingredients: TIngredient[];
 	bun?: TIngredient;
 };
 
@@ -27,9 +27,7 @@ export const ConstructorList = ({
 		const dragItem: TIngredient | undefined =
 			ingredients && ingredients[dragIndex];
 		if (dragItem) {
-			const coppiedStateArray: TIngredient[] | undefined = ingredients && [
-				...ingredients,
-			];
+			const coppiedStateArray: TIngredient[] = ingredients && [...ingredients];
 			const prevItem: TIngredient[] | undefined = coppiedStateArray?.splice(
 				hoverIndex,
 				1,

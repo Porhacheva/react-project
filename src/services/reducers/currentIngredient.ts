@@ -10,7 +10,7 @@ type TIngredientState = {
 	isModalOpen: boolean;
 };
 
-const ingredientsState: TIngredientState = {
+export const ingredientsState: TIngredientState = {
 	currentIngredient: null,
 	isModalOpen: false,
 };

@@ -1,3 +1,5 @@
+Ссылка на GitHub Pages https://porhacheva.github.io/react-project/index.html
+
 # Стартер на TypeScript для проекта Stellar Burger
 
 При попытке создать коммит автоматически запускаются проверки линтера и форматирования.

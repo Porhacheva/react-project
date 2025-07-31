@@ -19,7 +19,7 @@ type TOrderState = {
 	orderObject: TOrderData | null;
 };
 
-const orderState: TOrderState = {
+export const orderState: TOrderState = {
 	isModalOpen: false,
 	orderNumber: '',
 	orderRequest: false,

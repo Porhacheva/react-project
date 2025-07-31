@@ -16,14 +16,13 @@ type TWSState = {
 	error?: Event;
 };
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
 	wsConnected: false,
 	orders: [],
 	total: 0,
 	totalToday: 0,
 };
 
-// Создадим редьюсер для WebSocket
 export const wsReducer = (state = initialState, action: TWSActions) => {
 	switch (action.type) {
 		case WS_CONNECTION_START:

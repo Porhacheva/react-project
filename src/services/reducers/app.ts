@@ -23,7 +23,7 @@ type TAppState = {
 	price: number;
 };
 
-const initialState: TAppState = {
+export const initialState: TAppState = {
 	ingredients: [],
 	ingredientsRequest: false,
 	ingredientsRequestFailed: false,
