@@ -34,7 +34,7 @@ type TRegistrationState = {
 	revivePasswordPageIsVisited: boolean;
 };
 
-const registrationState: TRegistrationState = {
+export const registrationState: TRegistrationState = {
 	registrationRequest: false,
 	registrationRequestFailed: false,
 	isAuth: false,

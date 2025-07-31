@@ -1,4 +1,4 @@
-import { appReducer } from './app';
+import { appReducer, initialState } from './app';
 import {
 	GET_INGREDIENTS_REQUEST,
 	GET_INGREDIENTS_SUCCESS,
@@ -12,15 +12,6 @@ import {
 	INCREASE_ITEM,
 	SWAP_ITEMS,
 } from '../actions/constructor';
-
-const initialState = {
-	ingredients: [],
-	ingredientsRequest: false,
-	ingredientsRequestFailed: false,
-	constructorIngredients: [],
-	bun: null,
-	price: 0,
-};
 
 const mockIngredient = {
 	_id: '60cb37bc6c007b002732282b',

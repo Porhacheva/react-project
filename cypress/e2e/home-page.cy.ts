@@ -1,6 +1,10 @@
+const testIngredient: string = 'Флюоресцентная булка R2-D3';
+const testDetails: string = 'Детали ингредиента';
+const testProfile: string = 'Личный кабинет';
+
 describe('service is available', function () {
 	before(function () {
-		cy.visit('http://localhost:5173');
+		cy.visit('/');
 	});
 
 	it('should open constructor page by default', function () {
@@ -8,7 +12,7 @@ describe('service is available', function () {
 	});
 
 	it('should log in', function () {
-		cy.contains('Личный кабинет').click();
+		cy.contains(testProfile).click();
 		cy.get('.input').as('login-form');
 		cy.get('@login-form').find('[class^=text]').first().as('email-input');
 		cy.get('@login-form').find('[class^=input__icon]').first().click();
@@ -22,23 +26,23 @@ describe('service is available', function () {
 	});
 
 	it('should open and close modal by icon', function () {
-		cy.contains('Флюоресцентная булка R2-D3').click();
-		cy.contains('Детали ингредиента').should('be.visible');
-		cy.contains('Флюоресцентная булка R2-D3').should('be.visible');
+		cy.contains(testIngredient).click();
+		cy.contains(testDetails).should('be.visible');
+		cy.contains(testIngredient).should('be.visible');
 		cy.get('#closeModal').click();
 	});
 
 	it('should open and close modal by overlay', function () {
-		cy.contains('Флюоресцентная булка R2-D3').click();
-		cy.contains('Детали ингредиента').should('be.visible');
-		cy.contains('Флюоресцентная булка R2-D3').should('be.visible');
+		cy.contains(testIngredient).click();
+		cy.contains(testDetails).should('be.visible');
+		cy.contains(testIngredient).should('be.visible');
 		cy.get('#modalOverlay').click(-10, -10, { force: true });
 	});
 
 	it('should check drag and drop and make order', function () {
-		cy.contains('Флюоресцентная булка R2-D3').trigger('dragstart');
+		cy.contains(testIngredient).trigger('dragstart');
 		cy.get('#constructor').trigger('drop');
-		cy.get('#constructor').contains('Флюоресцентная булка R2-D3');
+		cy.get('#constructor').contains(testIngredient);
 		cy.contains('Биокотлета из марсианской Магнолии').trigger('dragstart');
 		cy.get('#constructor').trigger('drop');
 		cy.get('#constructor').contains('Биокотлета из марсианской Магнолии');
@@ -55,7 +59,7 @@ describe('service is available', function () {
 	});
 
 	it('should log out', function () {
-		cy.contains('Личный кабинет').click();
+		cy.contains(testProfile).click();
 		cy.contains('Выход').click();
 		cy.contains('Конструктор').click();
 	});

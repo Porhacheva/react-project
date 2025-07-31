@@ -1,13 +1,8 @@
-import { ingredientsReducer } from './currentIngredient';
+import { ingredientsReducer, ingredientsState } from './currentIngredient';
 import {
 	OPEN_INGREDIENTS_MODAL,
 	CLOSE_INGREDIENTS_MODAL,
 } from '../actions/currentIngredient';
-
-const ingredientsState = {
-	currentIngredient: null,
-	isModalOpen: false,
-};
 
 const mockIngredient = {
 	_id: '60cb37bc6c007b002732282b',

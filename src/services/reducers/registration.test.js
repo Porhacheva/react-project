@@ -1,4 +1,4 @@
-import { registrationReducer } from './registration';
+import { registrationReducer, registrationState } from './registration';
 import {
 	FEED_TAB_IS_ACTIVE,
 	GET_REGISTRATION_FAILED,
@@ -15,24 +15,6 @@ import {
 	AUTH,
 	REVIVE_PASSWORD_PAGE_IS_VISITED,
 } from '../actions/registration';
-
-const registrationState = {
-	registrationRequest: false,
-	registrationRequestFailed: false,
-	isAuth: false,
-	email: '',
-	name: '',
-	password: '',
-	accessToken: '',
-	error: '',
-	mainTabIsActive: false,
-	feedTabIsActive: false,
-	loginTabIsActive: false,
-	profileTabIsActive: false,
-	historyTabIsActive: false,
-	logoutTabIsActive: false,
-	revivePasswordPageIsVisited: false,
-};
 
 describe('registrationReducer', () => {
 	it('should return the initial state', () => {

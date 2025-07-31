@@ -16,7 +16,7 @@ type TWSState = {
 	error?: Event;
 };
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
 	wsConnected: false,
 	orders: [],
 	total: 0,

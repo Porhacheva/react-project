@@ -1,4 +1,4 @@
-import { orderReducer } from './order';
+import { orderReducer, orderState } from './order';
 import {
 	GET_ORDER_FAILED,
 	GET_ORDER_REQUEST,
@@ -8,15 +8,6 @@ import {
 	SELECT_ORDER,
 	GET_FEED_ORDER,
 } from '../actions/order';
-
-const orderState = {
-	isModalOpen: false,
-	orderNumber: '',
-	orderRequest: false,
-	orderRequestFailed: false,
-	order: 0,
-	orderObject: null,
-};
 
 describe('orderReducer', () => {
 	it('should return the initial state', () => {
